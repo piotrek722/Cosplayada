@@ -1,26 +1,38 @@
 package pl.edu.agh.tai.users;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 
-@RestController
+@Controller
 public class UserController {
 
-    private static final String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
-
-    private List<User> users = new LinkedList<>();
 
 
+    @RequestMapping("/add")
+    @ResponseBody
+    public String create(String name) {
+        String userId = "";
+        try {
+            User user = new User(name);
+            userDAO.save(user);
+            userId = String.valueOf(user.getId());
+        }
+        catch (Exception ex) {
+            return "Error creating the user: " + ex.toString();
+        }
+        return "User succesfully created with id = " + userId;
+    }
 
-    @RequestMapping("/user")
+    @Autowired
+    private UserDAO userDAO;
+
+ /*   @RequestMapping("/user")
     public User user(@RequestParam(value="name", defaultValue="World") String name) {
         return new User(counter.incrementAndGet(),
                 String.format(template, name));
@@ -42,4 +54,5 @@ public class UserController {
     public String showUsers() {
         return "showing all the users";
     }
+*/
 }
