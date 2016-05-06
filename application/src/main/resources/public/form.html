@@ -1,6 +1,6 @@
 <h2>Sign in!</h2>
-<form>
-    Nick: <input type="text">
-    Password: <input type="password">
-    <input type="submit">
+<form data-ng-controller="userForm">
+    Login: <input data-ng-model="login" type="text">
+    Password: <input data-ng-model="password" type="password">
+    <input data-ng-click="createUser()" type="submit">
 </form>

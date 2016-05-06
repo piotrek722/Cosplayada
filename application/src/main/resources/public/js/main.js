@@ -5,7 +5,7 @@ $(".nav a").on("click", function(){
 
 var app = angular.module('app',[]);
 
-app.controller('nav', function($scope,$http){
+app.controller('nav', function($scope){
 
     $scope.site='main.html';
 
@@ -15,6 +15,15 @@ app.controller('nav', function($scope,$http){
 
     $scope.getContent = function(){
         return $scope.site;
+    }
+
+});
+
+app.controller('userForm',function($scope,$http){4
+
+    $scope.createUser = function(){
+        $http.post("/users/add/?name=" + $scope.login);
+        //password pewnie w hashu
     }
 
 });

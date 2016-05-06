@@ -11,7 +11,7 @@ import pl.edu.agh.tai.dao.UserDAO;
 public class UserController {
 
 
-    @RequestMapping("/users/add")
+    @RequestMapping(value="/users/add", method = RequestMethod.POST)
     @ResponseBody
     public String create(String name) {
         String userId = "";
