@@ -1,12 +1,10 @@
-package pl.edu.agh.tai.users;
+package pl.edu.agh.tai.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
+import pl.edu.agh.tai.model.User;
+import pl.edu.agh.tai.dao.UserDAO;
 
 
 @Controller

@@ -1,4 +1,4 @@
-package pl.edu.agh.tai.events;
+package pl.edu.agh.tai.model;
 
 import javax.persistence.*;
 import java.util.Date;

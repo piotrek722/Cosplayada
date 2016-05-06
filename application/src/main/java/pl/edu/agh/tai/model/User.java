@@ -1,4 +1,4 @@
-package pl.edu.agh.tai.users;
+package pl.edu.agh.tai.model;
 
 import javax.persistence.*;
 
