@@ -10,10 +10,7 @@ app.controller('nav', function($scope,$http){
     $scope.site='main.html';
 
     $scope.changeSite = function(name){
-       $http.get(name).then(function(response){
-           $scope.content = response.data;
-           $scope.site = name;
-       });
+        $scope.site = name;
     };
 
     $scope.getContent = function(){
