@@ -11,8 +11,7 @@ import pl.edu.agh.tai.dao.UserDAO;
 public class UserController {
 
 
-
-    @RequestMapping("/add")
+    @RequestMapping("/users/add")
     @ResponseBody
     public String create(String name) {
         String userId = "";
@@ -30,27 +29,4 @@ public class UserController {
     @Autowired
     private UserDAO userDAO;
 
- /*   @RequestMapping("/user")
-    public User user(@RequestParam(value="name", defaultValue="World") String name) {
-        return new User(counter.incrementAndGet(),
-                String.format(template, name));
-    }
-
-    @RequestMapping("/user/add/{name}")
-    public void addUser(@PathVariable String name) {
-        User user = new User(counter.incrementAndGet(),name);
-        users.add(user);
-    }
-
-    @RequestMapping("/user/{name}")
-    public String getUser(@PathVariable String name) {
-        return "will return proper user";
-
-    }
-
-    @RequestMapping("/users")
-    public String showUsers() {
-        return "showing all the users";
-    }
-*/
 }

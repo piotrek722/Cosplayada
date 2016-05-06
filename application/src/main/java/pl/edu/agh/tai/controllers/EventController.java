@@ -9,7 +9,7 @@ import pl.edu.agh.tai.dao.EventDAO;
 
 
 @Controller
-public class EventsController {
+public class EventController {
 
     @RequestMapping("/events")
     @ResponseBody

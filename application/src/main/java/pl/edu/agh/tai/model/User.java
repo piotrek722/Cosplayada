@@ -1,6 +1,7 @@
 package pl.edu.agh.tai.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -8,15 +9,18 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long userId;
 
     @Column
     private String nickname;
 
+ //   @OneToMany(mappedBy = "user")     //cannot be mapped yet
+ //   private Set<Character> characters;
+
     public User() {    }
 
     public User(long id, String nickname) {
-        this.id =id;
+        this.userId =id;
         this.nickname = nickname;
     }
 
@@ -30,14 +34,30 @@ public class User {
     }
 
     public long getId() {
-        return id;
+        return userId;
     }
 
     public void setId(long id) {
-        this.id = id;
+        this.userId = id;
     }
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+ /*   public Set<Character> getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(Set<Character> characters) {
+        this.characters = characters;
+    }
+*/
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 }
