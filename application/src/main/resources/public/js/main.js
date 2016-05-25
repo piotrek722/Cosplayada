@@ -1,4 +1,4 @@
-angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProvider) {
+angular.module('main', [ 'ngRoute' ]).config(function($routeProvider, $httpProvider) {
 
     $routeProvider.when('/', {
         templateUrl: 'home.html',
@@ -6,7 +6,7 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
         controllerAs: 'controller'
     }).when('/login', {
         templateUrl: 'login.html',
-        controller: 'navi',
+        controller: 'navigation',
         controllerAs: 'controller'
     }).when('/signup', {
         templateUrl: 'signup.html',
@@ -16,7 +16,7 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
 
     $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-}).controller('navi',
+}).controller('navigation',
 
     function($rootScope, $http, $location, $route) {
 

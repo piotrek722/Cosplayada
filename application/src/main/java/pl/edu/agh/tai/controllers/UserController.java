@@ -1,11 +1,10 @@
 package pl.edu.agh.tai.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.tai.model.LoginInfo;
 import pl.edu.agh.tai.model.User;
-import pl.edu.agh.tai.dao.UserDAO;
+import pl.edu.agh.tai.dao.UserRepository;
 
 
 @RestController
@@ -17,7 +16,7 @@ public class UserController {
         try {
             User user = new User(userinfo.getUsername(), userinfo.getPassword());
             System.out.println("User created - name: " + user.getNickname() + " pass: " + user.getPassword());
-            userDAO.save(user);
+            userRepository.save(user);
         }
         catch (Exception ex) {
             return false;
@@ -26,6 +25,6 @@ public class UserController {
     }
 
     @Autowired
-    private UserDAO userDAO;
+    private UserRepository userRepository;
 
 }

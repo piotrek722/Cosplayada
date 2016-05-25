@@ -2,11 +2,12 @@ package pl.edu.agh.tai.dao;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
-import pl.edu.agh.tai.model.User;
+import pl.edu.agh.tai.model.Character;
+
 
 @Transactional
-public interface UserDAO extends CrudRepository<User, Long> {
+public interface CharacterRepository extends CrudRepository<Character, Long> {
 
-    public User findByNickname(String nickname);
+    public Character findByName(String Name);
 
 }

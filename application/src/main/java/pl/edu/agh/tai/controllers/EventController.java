@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pl.edu.agh.tai.model.Event;
-import pl.edu.agh.tai.dao.EventDAO;
+import pl.edu.agh.tai.dao.EventRepository;
 
 
 @Controller
@@ -16,7 +16,7 @@ public class EventController {
     @ResponseBody
     public String showEvents() {
 
-        return eventDAO.findAll().toString();
+        return eventRepository.findAll().toString();
     }
 
     @RequestMapping(value = "/events/add", method = RequestMethod.POST)
@@ -24,7 +24,7 @@ public class EventController {
     public String addEvent(String name) {
         try {
             Event event = new Event(name);
-            eventDAO.save(event);
+            eventRepository.save(event);
 
         }
         catch (Exception ex) {
@@ -34,5 +34,5 @@ public class EventController {
     }
 
     @Autowired
-    private EventDAO eventDAO;
+    private EventRepository eventRepository;
 }
