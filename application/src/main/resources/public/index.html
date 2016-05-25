@@ -13,32 +13,21 @@
     <script src="js/angular.min.js"></script>
 
     <title>Cosplayada</title>
+    <style type="text/css">
+        [ng\:cloak], [ng-cloak], .ng-cloak {
+            display: none !important;
+        }
+    </style>
 </head>
-<body data-ng-app="app" data-ng-controller="nav">
-
-    <nav class="navbar navbar-inverse" role="navigation">
-        <div class="container-fluid">
-
-            <div class="navbar-header">
-                <a class="navbar-brand">Cosplayada</a>
-            </div>
-
-            <ul class="nav navbar-nav">
-                <li class="active"><a data-ng-click="changeSite('main.html')">Home</a></li>
-                <li><a data-ng-click="changeSite('eventsView.html')">Events</a></li>
-                <!--<li><a>Characters</a></li> -->
-            </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-                <li><a data-ng-click="changeSite('form.html')"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                <li><a ><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-            </ul>
-
+<body ng-app="hello">
+    <div class="container">
+        <h1>Greeting</h1>
+        <div ng-controller="home as home" ng-cloak class="ng-cloak">
+            <p>The ID is {{home.greeting.id}}</p>
+            <p>The content is {{home.greeting.content}}</p>
         </div>
-    </nav>
-
-    <div class="container" data-ng-include="getContent()"></div>
-
+    </div>
+    <script src="js/hello.js"></script>
 </body>
-<script src="js/main.js"></script>
+
 </html>
