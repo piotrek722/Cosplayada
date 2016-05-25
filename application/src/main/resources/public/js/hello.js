@@ -17,7 +17,7 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
     function($rootScope, $http, $location, $route) {
 
         var self = this;
-
+        
         self.tab = function(route) {
             return $route.current && route === $route.current.controller;
         };
@@ -30,19 +30,33 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
                     + credentials.password)
             } : {};
 
-            $http.get('user', {
-                headers : headers
-            }).then(function(response) {
-                if (response.data.name) {
-                    $rootScope.authenticated = true;
-                } else {
-                    $rootScope.authenticated = false;
-                }
+            // $http.get('user', {
+            //     headers : headers
+            // }).then(function(response) {
+            //     if (response.data.name) {
+            //         $rootScope.authenticated = true;
+            //     } else {
+            //         $rootScope.authenticated = false;
+            //     }
+            //     callback && callback($rootScope.authenticated);
+            // }, function() {
+            //     $rootScope.authenticated = false;
+            //     callback && callback(false);
+            // });
+
+            var params = {
+                username : credentials.username,
+                password : credentials.password
+            }
+            var user = {
+                params: params
+            }
+            $http.get('auth', user).then(function (response) {
+                console.log(response.data);
+                $rootScope.authenticated = response.data;
                 callback && callback($rootScope.authenticated);
-            }, function() {
-                $rootScope.authenticated = false;
-                callback && callback(false);
-            });
+                $rootScope.username = credentials.username;
+            })
 
         }
 
@@ -52,12 +66,12 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
         self.login = function() {
             authenticate(self.credentials, function(authenticated) {
                 if (authenticated) {
-                    console.log("Login succeeded")
+                    console.log("Login succeeded");
                     $location.path("/");
                     self.error = false;
                     $rootScope.authenticated = true;
                 } else {
-                    console.log("Login failed")
+                    console.log("Login failed");
                     $location.path("/login");
                     self.error = true;
                     $rootScope.authenticated = false;
@@ -67,7 +81,10 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
 
         self.logout = function() {
             $http.post('logout', {}).finally(function() {
+            //    console.log(response.data);
                 $rootScope.authenticated = false;
+             //   callback && callback(false);
+                console.log("Logout succeeded");
                 $location.path("/");
             });
         }
