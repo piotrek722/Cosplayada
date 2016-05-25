@@ -10,7 +10,8 @@
     <!-- js -->
     <script src="js/jquery-1.12.3.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/angular.min.js"></script>
+    <script src="webjars/angularjs/1.3.8/angular.js"></script>
+    <script src="webjars/angular-route/1.5.5/angular-route.js"></script>
 
     <title>Cosplayada</title>
     <style type="text/css">
@@ -19,15 +20,17 @@
         }
     </style>
 </head>
-<body ng-app="hello">
-    <div class="container">
-        <h1>Greeting</h1>
-        <div ng-controller="home as home" ng-cloak class="ng-cloak">
-            <p>The ID is {{home.greeting.id}}</p>
-            <p>The content is {{home.greeting.content}}</p>
-        </div>
+<body ng-app="hello" ng-cloak class="ng-cloak">
+    <div ng-controller="navigation as nav" class="container">
+        <ul class="nav nav-pills" role="tablist">
+            <li ng-class="{active:nav.tab('home')}"><a href="#/">home</a></li>
+            <li ng-class="{active:nav.tab('navigation')}"><a href="#/login">login</a></li>
+            <li ng-show="authenticated"><a href="" ng-click="nav.logout()">logout</a></li>
+        </ul>
     </div>
+    <div ng-view class="container"></div>
+
     <script src="js/hello.js"></script>
-</body>
+</body></body>
 
 </html>
