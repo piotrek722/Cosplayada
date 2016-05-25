@@ -1,12 +1,16 @@
 angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProvider) {
 
     $routeProvider.when('/', {
-        templateUrl : 'home.html',
-        controller : 'home',
+        templateUrl: 'home.html',
+        controller: 'home',
         controllerAs: 'controller'
     }).when('/login', {
-        templateUrl : 'login.html',
-        controller : 'navigation',
+        templateUrl: 'login.html',
+        controller: 'navigation',
+        controllerAs: 'controller'
+    }).when('/signup', {
+        templateUrl: 'signup.html',
+        controller: 'signup',
         controllerAs: 'controller'
     }).otherwise('/');
 
@@ -47,10 +51,10 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
             var params = {
                 username : credentials.username,
                 password : credentials.password
-            }
+            };
             var user = {
                 params: params
-            }
+            };
             $http.get('auth', user).then(function (response) {
                 console.log(response.data);
                 $rootScope.authenticated = response.data;
@@ -58,7 +62,7 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
                 $rootScope.username = credentials.username;
             })
 
-        }
+        };
 
      //   authenticate();
 
@@ -89,9 +93,60 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
             });
         }
 
+
+
     }).controller('home', function($http) {
     var self = this;
     $http.get('/resource/').then(function(response) {
         self.greeting = response.data;
     })
+
+    }).controller('signup',
+
+    function($rootScope, $http, $location, $route) {
+
+        var self = this;
+        self.credentials = {};
+
+        var check_password = function(credentials, callback) {
+            if (credentials.password == credentials.repeat_password) {
+                $rootScope.checked = true;
+                console.log("passwords match");
+
+                var params = {
+                    username : credentials.username,
+                    password : credentials.password
+                };
+                var user = {
+                    params: params
+                };
+
+                console.log("trying to add user");
+                $http.get("/users/add/", user).then(function(response) {
+                    console.log("added "+ credentials.username);
+                    console.log(response.data);
+                });
+
+                callback && callback($rootScope.checked);
+            } else {
+                $rootScope.checked = false;
+                console.log("passwords dont match");
+            }
+        };
+
+        self.signup = function() {
+            check_password(self.credentials, function(checked) {
+
+                console.log("inside singup");
+
+                if (checked) {
+                    console.log("user successfully added");
+                    $location.path("/");
+                } else {
+                    console.log("Signup failed");
+                    $location.path("/signup");
+                }
+                
+            });
+        }
 });

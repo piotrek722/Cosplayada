@@ -3,27 +3,26 @@ package pl.edu.agh.tai.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import pl.edu.agh.tai.model.LoginInfo;
 import pl.edu.agh.tai.model.User;
 import pl.edu.agh.tai.dao.UserDAO;
 
 
-@Controller
+@RestController
 public class UserController {
 
 
-    @RequestMapping(value="/users/add", method = RequestMethod.POST)
-    @ResponseBody
-    public String create(String name) {
-        String userId = "";
+    @RequestMapping(value="/users/add")
+    public Boolean create(LoginInfo userinfo) {
         try {
-            User user = new User(name);
+            User user = new User(userinfo.getUsername(), userinfo.getPassword());
+            System.out.println("User created - name: " + user.getNickname() + " pass: " + user.getPassword());
             userDAO.save(user);
-            userId = String.valueOf(user.getId());
         }
         catch (Exception ex) {
-            return "Error creating the user: " + ex.toString();
+            return false;
         }
-        return "User succesfully created with id = " + userId;
+        return true;
     }
 
     @Autowired

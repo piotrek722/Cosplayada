@@ -14,6 +14,9 @@ public class User {
     @Column
     private String nickname;
 
+    @Column
+    private String password;
+
  //   @OneToMany(mappedBy = "user")     //cannot be mapped yet
  //   private Set<Character> characters;
 
@@ -27,6 +30,11 @@ public class User {
 
     public User(String nickname) {
         this.nickname = nickname;
+    }
+
+    public User(String nickname, String password) {
+        this.nickname = nickname;
+        this.password = password;
     }
 
     public String getNickname() {
@@ -59,5 +67,13 @@ public class User {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
