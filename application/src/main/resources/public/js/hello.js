@@ -6,7 +6,7 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
         controllerAs: 'controller'
     }).when('/login', {
         templateUrl: 'login.html',
-        controller: 'navigation',
+        controller: 'navi',
         controllerAs: 'controller'
     }).when('/signup', {
         templateUrl: 'signup.html',
@@ -16,7 +16,7 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
 
     $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-}).controller('navigation',
+}).controller('navi',
 
     function($rootScope, $http, $location, $route) {
 
@@ -84,6 +84,7 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
         };
 
         self.logout = function() {
+            console.log("trying to log out");
             $http.post('logout', {}).finally(function() {
             //    console.log(response.data);
                 $rootScope.authenticated = false;
@@ -91,7 +92,7 @@ angular.module('hello', [ 'ngRoute' ]).config(function($routeProvider, $httpProv
                 console.log("Logout succeeded");
                 $location.path("/");
             });
-        }
+        };
 
 
 

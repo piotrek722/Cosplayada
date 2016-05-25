@@ -21,17 +21,48 @@
     </style>
 </head>
 <body ng-app="hello" ng-cloak class="ng-cloak">
-    <div ng-controller="navigation as nav" class="container">
-        <ul class="nav nav-pills" role="tablist">
-            <li ng-class="{active:nav.tab('home')}"><a href="#/">home</a></li>
-            <li ng-show="!authenticated" ng-class="{active:nav.tab('navigation')}"><a href="#/login">login</a></li>
-            <li ng-show="!authenticated" ng-class="{active:nav.tab('signup')}"><a href="#/signup">signup</a></li>
-            <li ng-show="authenticated"><a href="" ng-click="nav.logout()">logout</a></li>
+
+<div ng-controller="navi as nav" class="container-fluid">
+    <ul class="nav navbar-inverse" role="navigation">
+
+    <!--<nav class="navbar navbar-inverse" role="navigation">-->
+        <!--<div ng-controller="navi" class="container-fluid">-->
+
+            <div class="navbar-header">
+                <a class="navbar-brand">Cosplayada</a>
+            </div>
+
+            <ul class="nav navbar-nav">
+                <li ng-class="{active:nav.tab('home')}"><a href="#/">Home</a></li>
+                <li ng-show="authenticated"><a href="#/">Events</a></li>
+                <!--<li><a>Characters</a></li> -->
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-show="!authenticated">
+                    <a href="#/login">Login</a></li>
+                <li ng-show="!authenticated">
+                    <a href="#/signup">Sign up</a></li>
+                <li ng-show="authenticated">
+                    <a ng-click="nav.logout()">Logout</a></li>
+            </ul>
         </ul>
-    </div>
+        </div>
+    <!--</nav>-->
+
     <div ng-view class="container"></div>
 
+    <!--<div ng-controller="navigation as nav" class="container">-->
+        <!--<ul class="nav nav-pills" role="tablist">-->
+            <!--<li ng-class="{active:nav.tab('home')}"><a href="#/">home</a></li>-->
+            <!--<li ng-show="!authenticated" ng-class="{active:nav.tab('navigation')}"><a href="#/login">login</a></li>-->
+            <!--<li ng-show="!authenticated" ng-class="{active:nav.tab('signup')}"><a href="#/signup">signup</a></li>-->
+            <!--<li ng-show="authenticated"><a href="" ng-click="nav.logout()">logout</a></li>-->
+        <!--</ul>-->
+    <!--</div>-->
+    <!--<div ng-view class="container"></div>-->
+
     <script src="js/hello.js"></script>
-</body></body>
+</body>
 
 </html>
