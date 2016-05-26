@@ -1,4 +1,4 @@
-package pl.edu.agh.tai.dao;
+package pl.edu.agh.tai.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;

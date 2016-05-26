@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.tai.model.LoginInfo;
 import pl.edu.agh.tai.model.User;
-import pl.edu.agh.tai.dao.UserRepository;
+import pl.edu.agh.tai.repository.UserRepository;
 
 
 @RestController
