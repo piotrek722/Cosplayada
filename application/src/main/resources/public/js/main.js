@@ -16,6 +16,14 @@ angular.module('main', [ 'ngRoute' ]).config(function($routeProvider, $httpProvi
         templateUrl: 'logout.html',
         controller: 'navigation',
         controllerAs: 'controller'
+    }).when('/events', {
+        templateUrl: 'eventsView.html',
+        controller: 'events_controller',
+        controllerAs: 'controller'
+    }).when('/events/add', {
+        templateUrl: 'addEvent.html',
+        controller: 'events_controller',
+        controllerAs: 'controller'
     }).otherwise('/');
 
     $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -154,4 +162,47 @@ angular.module('main', [ 'ngRoute' ]).config(function($routeProvider, $httpProvi
                 
             });
         }
+    }).controller('events_controller',
+        function($rootScope, $http, $location, $route) {
+
+            var self = this;
+            self.event = {};
+            
+            self.showEvents = function() {
+                console.log('showing events');
+                $http.get('/events', {}).then(function (response) {
+                    self.eventsArray = response.data;
+                    console.log(response.data);
+                });
+            };
+            
+            var check_event = function (event, callback) {
+
+                var params = {
+                    name : event.name
+                };
+
+                var event_info = {
+                    params : params
+                };
+
+                $http.get('/events/add', event_info).then(function(response) {
+                    console.log("Adding new event");
+                //    console.log(response.data);
+                });
+                callback && callback($rootScope.checked);
+            };
+
+            self.addEvent = function() {
+                check_event(self.event, function(checked) {
+                    if (checked) {
+                        console.log("added new event");
+                        $location.path("/events");
+                    } else {
+                        console.log("error adding event");
+                    }
+                });
+
+
+            }
 });

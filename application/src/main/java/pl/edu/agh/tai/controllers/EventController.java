@@ -5,32 +5,32 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import pl.edu.agh.tai.model.Event;
 import pl.edu.agh.tai.dao.EventRepository;
+import pl.edu.agh.tai.model.EventInfo;
 
 
-@Controller
+@RestController
 public class EventController {
 
     @RequestMapping(value = "/events", method = RequestMethod.GET)
-    @ResponseBody
-    public String showEvents() {
+    public Iterable<Event> showEvents() {
 
-        return eventRepository.findAll().toString();
+        return eventRepository.findAll();
     }
 
-    @RequestMapping(value = "/events/add", method = RequestMethod.POST)
-    @ResponseBody
-    public String addEvent(String name) {
+    @RequestMapping(value = "/events/add")
+    public Boolean addEvent(EventInfo eventInfo) {
         try {
-            Event event = new Event(name);
+            Event event = new Event(eventInfo.getName());
+            System.out.println("Event created with name: " + eventInfo.getName());
             eventRepository.save(event);
-
         }
         catch (Exception ex) {
-            return "Error creating the event: " + ex.toString();
+            return false;
         }
-        return "Event created" ;
+        return true;
     }
 
     @Autowired
