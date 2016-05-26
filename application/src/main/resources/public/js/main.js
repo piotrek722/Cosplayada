@@ -22,7 +22,7 @@ angular.module('main', [ 'ngRoute' ]).config(function($routeProvider, $httpProvi
         controllerAs: 'controller'
     }).when('/events/add', {
         templateUrl: 'addEvent.html',
-        controller: 'events_controller',
+        controller: 'add_events_controller',
         controllerAs: 'controller'
     }).otherwise('/');
 
@@ -166,16 +166,21 @@ angular.module('main', [ 'ngRoute' ]).config(function($routeProvider, $httpProvi
         function($rootScope, $http, $location, $route) {
 
             var self = this;
+            $rootScope.evenstArray = {};
+
+            console.log('showing events');
+            $http.get('/events', {}).then(function (response) {
+                $rootScope.eventsArray = response.data;
+                console.log(response.data);
+            });
+            
+
+}).controller('add_events_controller',
+
+        function($rootScope, $http, $location, $route) {
+
+            var self = this;
             self.event = {};
-            
-            self.showEvents = function() {
-                console.log('showing events');
-                $http.get('/events', {}).then(function (response) {
-                    self.eventsArray = response.data;
-                    console.log(response.data);
-                });
-            };
-            
             var check_event = function (event, callback) {
 
                 var params = {
@@ -188,7 +193,7 @@ angular.module('main', [ 'ngRoute' ]).config(function($routeProvider, $httpProvi
 
                 $http.get('/events/add', event_info).then(function(response) {
                     console.log("Adding new event");
-                //    console.log(response.data);
+                    //    console.log(response.data);
                 });
                 callback && callback($rootScope.checked);
             };
@@ -202,7 +207,5 @@ angular.module('main', [ 'ngRoute' ]).config(function($routeProvider, $httpProvi
                         console.log("error adding event");
                     }
                 });
-
-
             }
 });

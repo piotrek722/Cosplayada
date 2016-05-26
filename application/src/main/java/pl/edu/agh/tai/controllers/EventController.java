@@ -10,6 +10,8 @@ import pl.edu.agh.tai.model.Event;
 import pl.edu.agh.tai.dao.EventRepository;
 import pl.edu.agh.tai.model.EventInfo;
 
+import java.util.ArrayList;
+
 
 @RestController
 public class EventController {
@@ -17,6 +19,7 @@ public class EventController {
     @RequestMapping(value = "/events", method = RequestMethod.GET)
     public Iterable<Event> showEvents() {
 
+        System.out.println(eventRepository.findAll().toString());
         return eventRepository.findAll();
     }
 
