@@ -15,19 +15,6 @@ import java.util.UUID;
 @RestController
 public class CosplayadaApplication {
 
-    @RequestMapping("/user")
-    public Principal user(Principal user) {
-        return user;
-    }
-
-
-    @RequestMapping("/resource")
-    public Map<String, Object> home() {
-        Map<String, Object> model = new HashMap<String, Object>();
-        model.put("content", "Hello on Cosplayada site!");
-        return model;
-    }
-
 	public static void main(String[] args) {
 		SpringApplication.run(CosplayadaApplication.class, args);
 	}

@@ -1,4 +1,7 @@
-angular.module('main', [ 'ngRoute' ]).config(function($routeProvider, $httpProvider) {
+var app = angular.module('main', [ 'ngRoute' ]);
+
+
+app.config(function($routeProvider, $httpProvider) {
 
     $routeProvider.when('/', {
         templateUrl: 'home.html',
@@ -30,25 +33,36 @@ angular.module('main', [ 'ngRoute' ]).config(function($routeProvider, $httpProvi
         controllerAs: 'controller'
     }).otherwise('/');
 
-    $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+    //$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-}).controller('navigation',
+});
 
-    function($rootScope, $http, $location, $route) {
+app.controller('home', function($http) {
 
-        var self = this;
-        
-        self.tab = function(route) {
-            return $route.current && route === $route.current.controller;
-        };
+    var self = this;
 
-        var authenticate = function(credentials, callback) {
+    $http.get('/resource').then(function(response) {
+        self.greeting = response.data;
+    });
 
-            var headers = credentials ? {
-                authorization : "Basic "
-                + btoa(credentials.username + ":"
-                    + credentials.password)
-            } : {};
+});
+
+
+app.controller('navigation', function($rootScope, $http, $location, $route) {
+
+    var self = this;
+
+    self.tab = function(route) {
+        return $route.current && route === $route.current.controller;
+    };
+
+    var authenticate = function(credentials, callback) {
+
+        var headers = credentials ? {
+            authorization : "Basic "
+            + btoa(credentials.username + ":"
+                + credentials.password)
+        } : {};
 
             var params = {
                 username : credentials.username,
@@ -64,7 +78,7 @@ angular.module('main', [ 'ngRoute' ]).config(function($routeProvider, $httpProvi
                 $rootScope.username = credentials.username;
             })
 
-        };
+    };
 
         self.credentials = {};
         self.login = function() {
@@ -92,51 +106,43 @@ angular.module('main', [ 'ngRoute' ]).config(function($routeProvider, $httpProvi
             });
         };
 
+});
 
+app.controller('signup', function($rootScope, $http, $location, $route) {
 
-    }).controller('home', function($http) {
     var self = this;
-    $http.get('/resource/').then(function(response) {
-        self.greeting = response.data;
-    })
+    self.credentials = {};
 
-    }).controller('signup',
+    var check_password = function(credentials, callback) {
+        if (credentials.password == credentials.repeat_password) {
+            $rootScope.checked = true;
+            console.log("passwords match");
 
-    function($rootScope, $http, $location, $route) {
+            var params = {
+                username : credentials.username,
+                password : credentials.password
+            };
+            var user = {
+                params: params
+            };
 
-        var self = this;
-        self.credentials = {};
+            console.log("trying to add user");
+            $http.get("/users/add/", user).then(function(response) {
+                console.log("added "+ credentials.username);
+                console.log(response.data);
+            });
 
-        var check_password = function(credentials, callback) {
-            if (credentials.password == credentials.repeat_password) {
-                $rootScope.checked = true;
-                console.log("passwords match");
+            callback && callback($rootScope.checked);
+        } else {
+            $rootScope.checked = false;
+            console.log("passwords dont match");
+        }
+    };
 
-                var params = {
-                    username : credentials.username,
-                    password : credentials.password
-                };
-                var user = {
-                    params: params
-                };
+    self.signup = function() {
+        check_password(self.credentials, function(checked) {
 
-                console.log("trying to add user");
-                $http.get("/users/add/", user).then(function(response) {
-                    console.log("added "+ credentials.username);
-                    console.log(response.data);
-                });
-
-                callback && callback($rootScope.checked);
-            } else {
-                $rootScope.checked = false;
-                console.log("passwords dont match");
-            }
-        };
-
-        self.signup = function() {
-            check_password(self.credentials, function(checked) {
-
-                console.log("inside singup");
+            console.log("inside singup");
 
                 if (checked) {
                     console.log("user successfully added");
@@ -147,36 +153,38 @@ angular.module('main', [ 'ngRoute' ]).config(function($routeProvider, $httpProvi
                 }
                 
             });
-        }
-    }).controller('events_controller',
-        function($rootScope, $http, $location, $route) {
+        };
+    });
 
-            var self = this;
-            $rootScope.evenstArray = {};
 
-            console.log('showing events');
-            $http.get('/events', {}).then(function (response) {
-                $rootScope.eventsArray = response.data;
-                console.log(response.data);
-            });
-            
+app.controller('events_controller', function($rootScope, $http, $location, $route) {
 
-}).controller('add_events_controller',
+    var self = this;
+    $rootScope.evenstArray = {};
 
-        function($rootScope, $http, $location, $route) {
+    console.log('showing events');
+    $http.get('/events', {}).then(function (response) {
+        $rootScope.eventsArray = response.data;
+        console.log(response.data);
+    });
 
-            var self = this;
-            self.event = {};
-            var check_event = function (event, callback) {
+});
+
+
+app.controller('add_events_controller', function($rootScope, $http, $location, $route) {
+
+    var self = this;
+    self.event = {};
+    var check_event = function (event, callback) {
 
                 var params = {
                     name : event.name,
                     city : event.city
                 };
 
-                var event_info = {
-                    params : params
-                };
+        var event_info = {
+            params : params
+        };
 
                 $http.get('/events/add', event_info).then(function(response) {
                     console.log("Adding new event");
@@ -185,14 +193,14 @@ angular.module('main', [ 'ngRoute' ]).config(function($routeProvider, $httpProvi
                 callback && callback($rootScope.checked);
             };
 
-            self.addEvent = function() {
-                check_event(self.event, function(checked) {
-                    if (checked) {
-                        console.log("added new event");
-                        $location.path("/events");
-                    } else {
-                        console.log("error adding event");
-                    }
-                });
+    self.addEvent = function() {
+        check_event(self.event, function(checked) {
+            if (checked) {
+                console.log("added new event");
+                $location.path("/events");
+            } else {
+                console.log("error adding event");
             }
+        });
+    }
 });
