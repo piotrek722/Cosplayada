@@ -1,3 +1,16 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $('#example tr').click(function() {
+            var href = $(this).find("a").attr("ng-href");
+            if(href) {
+                window.location = href;
+            }
+        });
+
+    });
+</script>
+
 <div ng-app="main" ng-controller="events_controller">
 
     <div class="container">
@@ -11,8 +24,8 @@
             </thead>
             <tbody>
             <tr ng-repeat="x in eventsArray">
-                <td>{{ x.id }}</td>
-                <td>{{ x.name }}</td>
+                    <td>{{ x.id }}</td>
+                    <td><a ng-href="#/events/{{x.id}}">{{ x.name }}</a></td>
             </tr>
             </tbody>
         </table>

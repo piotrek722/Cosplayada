@@ -24,6 +24,10 @@ angular.module('main', [ 'ngRoute' ]).config(function($routeProvider, $httpProvi
         templateUrl: 'addEvent.html',
         controller: 'add_events_controller',
         controllerAs: 'controller'
+    }).when('/events/:id', {
+        templateUrl: 'event.html',
+        controller: 'events_controller',
+        controllerAs: 'controller'
     }).otherwise('/');
 
     $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
