@@ -12,6 +12,10 @@ angular.module('main', [ 'ngRoute' ]).config(function($routeProvider, $httpProvi
         templateUrl: 'signup.html',
         controller: 'signup',
         controllerAs: 'controller'
+    }).when('/logout', {
+        templateUrl: 'logout.html',
+        controller: 'navigation',
+        controllerAs: 'controller'
     }).otherwise('/');
 
     $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -90,7 +94,7 @@ angular.module('main', [ 'ngRoute' ]).config(function($routeProvider, $httpProvi
                 $rootScope.authenticated = false;
              //   callback && callback(false);
                 console.log("Logout succeeded");
-                $location.path("/");
+                $location.path("/logout");
             });
         };
 
