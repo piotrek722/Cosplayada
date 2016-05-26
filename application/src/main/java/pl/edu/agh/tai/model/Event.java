@@ -29,6 +29,11 @@ public class Event {
         this.name = name;
     }
 
+    public Event(String name, String city) {
+        this.name = name;
+        this.city = city;
+    }
+
     public long getId() {
         return id;
     }

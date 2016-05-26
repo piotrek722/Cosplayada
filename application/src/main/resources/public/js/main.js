@@ -50,20 +50,6 @@ angular.module('main', [ 'ngRoute' ]).config(function($routeProvider, $httpProvi
                     + credentials.password)
             } : {};
 
-            // $http.get('user', {
-            //     headers : headers
-            // }).then(function(response) {
-            //     if (response.data.name) {
-            //         $rootScope.authenticated = true;
-            //     } else {
-            //         $rootScope.authenticated = false;
-            //     }
-            //     callback && callback($rootScope.authenticated);
-            // }, function() {
-            //     $rootScope.authenticated = false;
-            //     callback && callback(false);
-            // });
-
             var params = {
                 username : credentials.username,
                 password : credentials.password
@@ -79,8 +65,6 @@ angular.module('main', [ 'ngRoute' ]).config(function($routeProvider, $httpProvi
             })
 
         };
-
-     //   authenticate();
 
         self.credentials = {};
         self.login = function() {
@@ -102,9 +86,7 @@ angular.module('main', [ 'ngRoute' ]).config(function($routeProvider, $httpProvi
         self.logout = function() {
             console.log("trying to log out");
             $http.post('logout', {}).finally(function() {
-            //    console.log(response.data);
                 $rootScope.authenticated = false;
-             //   callback && callback(false);
                 console.log("Logout succeeded");
                 $location.path("/logout");
             });
@@ -188,7 +170,8 @@ angular.module('main', [ 'ngRoute' ]).config(function($routeProvider, $httpProvi
             var check_event = function (event, callback) {
 
                 var params = {
-                    name : event.name
+                    name : event.name,
+                    city : event.city
                 };
 
                 var event_info = {
@@ -197,7 +180,7 @@ angular.module('main', [ 'ngRoute' ]).config(function($routeProvider, $httpProvi
 
                 $http.get('/events/add', event_info).then(function(response) {
                     console.log("Adding new event");
-                    //    console.log(response.data);
+                    console.log(response.data);
                 });
                 callback && callback($rootScope.checked);
             };

@@ -26,7 +26,7 @@ public class EventController {
     @RequestMapping(value = "/events/add")
     public Boolean addEvent(EventInfo eventInfo) {
         try {
-            Event event = new Event(eventInfo.getName());
+            Event event = new Event(eventInfo.getName(), eventInfo.getCity());
             System.out.println("Event created with name: " + eventInfo.getName());
             eventRepository.save(event);
         }
