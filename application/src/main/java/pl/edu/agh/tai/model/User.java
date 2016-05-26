@@ -9,6 +9,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="USER_ID")
     private long userId;
 
     @Column
@@ -17,8 +18,12 @@ public class User {
     @Column
     private String password;
 
- //   @OneToMany(mappedBy = "user")     //cannot be mapped yet
- //   private Set<Character> characters;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_events", joinColumns = {
+            @JoinColumn(name = "USER_ID", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "EVENT_ID",
+                    nullable = false, updatable = false) })
+    private Set<Event> events;
 
     public User() {    }
 
@@ -75,5 +80,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Set<Event> events) {
+        this.events = events;
     }
 }

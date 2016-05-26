@@ -1,2 +1,10 @@
 <p>Event id is: {{controller.event_info.id}}</p>
 <p>Event name is: {{controller.event_info.name}}</p>
+
+<form role="form" ng-submit="controller.joinEvent()">
+    <div class="form-group">
+        <label for="character">Character</label>
+            <input type="text" class="form-control" id="character" name="character" ng-model="controller.user.character"/>
+    </div>
+    <button type="submit" class="btn btn-primary">Join</button>
+</form>
