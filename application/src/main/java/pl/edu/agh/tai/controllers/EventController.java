@@ -1,6 +1,7 @@
 package pl.edu.agh.tai.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +32,12 @@ public class EventController {
             return false;
         }
         return true;
+    }
+
+    @RequestMapping(value = "/events/{id}")
+    public Event showEventWithId(@PathVariable long id) {
+        System.out.println("Event found: " + eventRepository.findById(id).getName());
+        return eventRepository.findById(id);
     }
 
     @Autowired
