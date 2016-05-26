@@ -6,10 +6,16 @@ import pl.edu.agh.tai.model.LoginInfo;
 import pl.edu.agh.tai.model.User;
 import pl.edu.agh.tai.dao.UserRepository;
 
+import java.security.Principal;
+
 
 @RestController
 public class UserController {
 
+    @RequestMapping(value="/user")
+    public Principal user(Principal user) {
+        return user;
+    }
 
     @RequestMapping(value="/users/add")
     public Boolean create(LoginInfo userinfo) {
