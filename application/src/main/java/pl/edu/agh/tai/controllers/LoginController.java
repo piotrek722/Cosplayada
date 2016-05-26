@@ -3,7 +3,7 @@ package pl.edu.agh.tai.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.edu.agh.tai.dao.UserRepository;
+import pl.edu.agh.tai.repository.UserRepository;
 import pl.edu.agh.tai.model.LoginInfo;
 import pl.edu.agh.tai.model.User;
 

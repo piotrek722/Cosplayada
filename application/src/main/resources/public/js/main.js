@@ -64,65 +64,47 @@ app.controller('navigation', function($rootScope, $http, $location, $route) {
                 + credentials.password)
         } : {};
 
-        // $http.get('user', {
-        //     headers : headers
-        // }).then(function(response) {
-        //     if (response.data.name) {
-        //         $rootScope.authenticated = true;
-        //     } else {
-        //         $rootScope.authenticated = false;
-        //     }
-        //     callback && callback($rootScope.authenticated);
-        // }, function() {
-        //     $rootScope.authenticated = false;
-        //     callback && callback(false);
-        // });
-
-        var params = {
-            username : credentials.username,
-            password : credentials.password
-        };
-        var user = {
-            params: params
-        };
-        $http.get('auth', user).then(function (response) {
-            console.log(response.data);
-            $rootScope.authenticated = response.data;
-            callback && callback($rootScope.authenticated);
-            $rootScope.username = credentials.username;
-        })
+            var params = {
+                username : credentials.username,
+                password : credentials.password
+            };
+            var user = {
+                params: params
+            };
+            $http.get('auth', user).then(function (response) {
+                console.log(response.data);
+                $rootScope.authenticated = response.data;
+                callback && callback($rootScope.authenticated);
+                $rootScope.username = credentials.username;
+            })
 
     };
 
- //   authenticate();
+        self.credentials = {};
+        self.login = function() {
+            authenticate(self.credentials, function(authenticated) {
+                if (authenticated) {
+                    console.log("Login succeeded");
+                    $location.path("/");
+                    self.error = false;
+                    $rootScope.authenticated = true;
+                } else {
+                    console.log("Login failed");
+                    $location.path("/login");
+                    self.error = true;
+                    $rootScope.authenticated = false;
+                }
+            })
+        };
 
-    self.credentials = {};
-    self.login = function() {
-        authenticate(self.credentials, function(authenticated) {
-            if (authenticated) {
-                console.log("Login succeeded");
-                $location.path("/");
-                self.error = false;
-                $rootScope.authenticated = true;
-            } else {
-                console.log("Login failed");
-                $location.path("/login");
-                self.error = true;
+        self.logout = function() {
+            console.log("trying to log out");
+            $http.post('logout', {}).finally(function() {
                 $rootScope.authenticated = false;
-            }
-        })
-    };
-
-    self.logout = function() {
-        console.log("trying to log out");
-        $http.post('logout', {}).finally(function() {
-        //    console.log(response.data);
-            $rootScope.authenticated = false;
-         //   callback && callback(false);
-            console.log("Logout succeeded");
-            $location.path("/logout");
-        });
-    };
+                console.log("Logout succeeded");
+                $location.path("/logout");
+            });
+        };
 
 });
 
@@ -195,20 +177,21 @@ app.controller('add_events_controller', function($rootScope, $http, $location, $
     self.event = {};
     var check_event = function (event, callback) {
 
-        var params = {
-            name : event.name
-        };
+                var params = {
+                    name : event.name,
+                    city : event.city
+                };
 
         var event_info = {
             params : params
         };
 
-        $http.get('/events/add', event_info).then(function(response) {
-            console.log("Adding new event");
-            //    console.log(response.data);
-        });
-        callback && callback($rootScope.checked);
-    };
+                $http.get('/events/add', event_info).then(function(response) {
+                    console.log("Adding new event");
+                    console.log(response.data);
+                });
+                callback && callback($rootScope.checked);
+            };
 
     self.addEvent = function() {
         check_event(self.event, function(checked) {
