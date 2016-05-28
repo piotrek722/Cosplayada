@@ -1,12 +1,17 @@
 package pl.edu.agh.tai.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.agh.tai.model.Event;
+import pl.edu.agh.tai.model.User;
 import pl.edu.agh.tai.repository.EventRepository;
 import pl.edu.agh.tai.model.EventInfo;
+import pl.edu.agh.tai.repository.UserRepository;
+
+import java.util.HashSet;
 
 
 @RestController
@@ -33,6 +38,28 @@ public class EventController {
         return true;
     }
 
+    @RequestMapping(value = "/events/{id}")
+    public Event showEventWithId(@PathVariable long id) {
+        System.out.println("Event found: " + eventRepository.findById(id).getName());
+        return eventRepository.findById(id);
+    }
+
+    @RequestMapping(value = "/events/{id}/join/{username}")
+    public Boolean joinEvent(@PathVariable long id, @PathVariable String username) {
+        Event event = eventRepository.findById(id);
+        User user = userRepository.findByNickname(username);
+        if (event != null && user != null) {
+            event.getUserSet().add(user);
+            user.getEvents().add(event);
+            userRepository.save(user);
+            return true;
+        }
+        return false;
+    }
+
     @Autowired
     private EventRepository eventRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 }

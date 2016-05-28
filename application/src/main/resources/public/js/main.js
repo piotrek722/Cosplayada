@@ -29,7 +29,7 @@ app.config(function($routeProvider, $httpProvider) {
         controllerAs: 'controller'
     }).when('/events/:id', {
         templateUrl: 'event.html',
-        controller: 'events_controller',
+        controller: 'event_controller',
         controllerAs: 'controller'
     }).otherwise('/');
 
@@ -170,7 +170,6 @@ app.controller('events_controller', function($rootScope, $http, $location, $rout
 
 });
 
-
 app.controller('add_events_controller', function($rootScope, $http, $location, $route) {
 
     var self = this;
@@ -203,4 +202,27 @@ app.controller('add_events_controller', function($rootScope, $http, $location, $
             }
         });
     }
+});
+
+app.controller('event_controller', function($http, $routeParams, $rootScope, $location) {
+
+    var self = this;
+    console.log("getting one event");
+    console.log($routeParams.id);
+    $http.get('/events/' + $routeParams.id).then(function(response) {
+        console.log("Got event");
+        console.log(response.data);
+        self.event_info = response.data;
+    });
+
+    self.joinEvent = function () {
+        console.log("joining event");
+        $http.get('events/' + $routeParams.id + '/join/' + $rootScope.username)
+            .then( function (response) {
+                console.log("Response from joining");
+                console.log(response.data);
+                $location.path('#/events');
+        })
+    }
+
 });

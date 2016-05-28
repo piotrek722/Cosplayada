@@ -9,5 +9,6 @@ import pl.edu.agh.tai.model.Event;
 public interface EventRepository extends CrudRepository<Event, Long> {
 
     public Event findByName(String Name);
+    public Event findById(long id);
 
 }

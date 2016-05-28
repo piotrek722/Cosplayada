@@ -2,6 +2,8 @@ package pl.edu.agh.tai.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="events")
@@ -9,6 +11,7 @@ public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "EVENT_ID")
     private long id;
 
     @Column
@@ -23,15 +26,22 @@ public class Event {
     @Column
     private String address;
 
-    public Event() {}
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "events")
+    private Set<User> userSet;
+
+    public Event() {
+        userSet = new HashSet<>();
+    }
 
     public Event(String name) {
         this.name = name;
+        userSet = new HashSet<>();
     }
 
     public Event(String name, String city) {
         this.name = name;
         this.city = city;
+        userSet = new HashSet<>();
     }
 
     public long getId() {
@@ -72,6 +82,14 @@ public class Event {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Set<User> getUserSet() {
+        return userSet;
+    }
+
+    public void setUserSet(Set<User> userSet) {
+        this.userSet = userSet;
     }
 
     @Override
