@@ -12,7 +12,7 @@ public class User {
     @Column(name="USER_ID")
     private long userId;
 
-    @Column
+    @Column(unique = true)
     private String nickname;
 
     @Column

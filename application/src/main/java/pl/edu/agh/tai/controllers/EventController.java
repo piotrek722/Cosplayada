@@ -20,6 +20,7 @@ public class EventController {
     @RequestMapping(value = "/events", method = RequestMethod.GET)
     public Iterable<Event> showEvents() {
 
+        System.out.println("Showing events by findall:");
         System.out.println(eventRepository.findAll().toString());
         return eventRepository.findAll();
     }
@@ -52,6 +53,7 @@ public class EventController {
             event.getUserSet().add(user);
             user.getEvents().add(event);
             userRepository.save(user);
+            System.out.println("Joined user to " + event.getName());
             return true;
         }
         return false;

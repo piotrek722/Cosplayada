@@ -12,10 +12,10 @@ import java.security.Principal;
 @RestController
 public class UserController {
 
-    @RequestMapping(value="/user")
-    public Principal user(Principal user) {
-        return user;
-    }
+//    @RequestMapping(value="/user")
+//    public Principal user(Principal user) {
+//        return user;
+//    }
 
     @RequestMapping(value="/users/add")
     public Boolean create(LoginInfo userinfo) {
@@ -28,6 +28,13 @@ public class UserController {
             return false;
         }
         return true;
+    }
+
+
+    @RequestMapping(value = "/users/{name}")
+    public User getUserId(@PathVariable String name) {
+        System.out.println("Getting user profile" + name);
+        return userRepository.findByNickname(name);
     }
 
     @Autowired

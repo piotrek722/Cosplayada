@@ -1,0 +1,16 @@
+<h>User profile</h>
+<div ng-controller="user_controller">
+<p>Username is: {{controller.user_info.nickname}}</p>
+<br>
+<p>Characters</p>
+<form role="form" class="col-lg-3 col-md-3 col-sm-4 col-xs-8" ng-submit="controller.addCharacter()">
+    <div class="form-group">
+        <label for="name">Character name</label>
+        <input type="text" class="form-control" id="name" name="name" ng-model="controller.character.name"/>
+        <label for="description">Description</label>
+        <input type="text" class="form-control" id="description" name="description" ng-model="controller.character.description"/>
+
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>
+</div>

@@ -31,6 +31,10 @@ app.config(function($routeProvider, $httpProvider) {
         templateUrl: 'event.html',
         controller: 'event_controller',
         controllerAs: 'controller'
+    }).when('/user', {
+        templateUrl: 'user.html',
+        controller: 'user_controller',
+        controllerAs: 'controller'
     }).otherwise('/');
 
     //$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -76,7 +80,13 @@ app.controller('navigation', function($rootScope, $http, $location, $route) {
                 $rootScope.authenticated = response.data;
                 callback && callback($rootScope.authenticated);
                 $rootScope.username = credentials.username;
-            })
+            });
+
+            // $http.get('/users/' + $rootScope.username, {}).then(function (response) {
+            //     console.log("Getting my id");
+            //     $rootScope.userid = response.data;
+            //     console.log(response.data);
+            // });
 
     };
 
@@ -105,6 +115,16 @@ app.controller('navigation', function($rootScope, $http, $location, $route) {
                 $location.path("/logout");
             });
         };
+
+    // $http.get('/users/' + $rootScope.username)
+    //     .then( function (response) {
+    //         self.user_info = response.data;
+    //         console.log("Response from user");
+    //         console.log(response.data);
+    //     }, function onError (response) {
+    //         console.log("Error");
+    //         console.log(response.data);
+    //     })
 
 });
 
@@ -157,72 +177,22 @@ app.controller('signup', function($rootScope, $http, $location, $route) {
     });
 
 
-app.controller('events_controller', function($rootScope, $http, $location, $route) {
+
+
+app.controller('user_controller', function($rootScope, $http, $location, $route) {
 
     var self = this;
-    $rootScope.evenstArray = {};
+    $rootScope.user_info = {};
 
-    console.log('showing events');
-    $http.get('/events', {}).then(function (response) {
-        $rootScope.eventsArray = response.data;
+    console.log('showing user');
+    $http.get('/users/'+$rootScope.username, {}).then(function (response) {
+        $rootScope.user_info = response.data;
         console.log(response.data);
+        // $location.path('/users/'+$rootScope.username);
     });
 
-});
-
-app.controller('add_events_controller', function($rootScope, $http, $location, $route) {
-
-    var self = this;
-    self.event = {};
-    var check_event = function (event, callback) {
-
-                var params = {
-                    name : event.name,
-                    city : event.city
-                };
-
-        var event_info = {
-            params : params
-        };
-
-                $http.get('/events/add', event_info).then(function(response) {
-                    console.log("Adding new event");
-                    console.log(response.data);
-                });
-                callback && callback($rootScope.checked);
-            };
-
-    self.addEvent = function() {
-        check_event(self.event, function(checked) {
-            if (checked) {
-                console.log("added new event");
-                $location.path("/events");
-            } else {
-                console.log("error adding event");
-            }
-        });
-    }
-});
-
-app.controller('event_controller', function($http, $routeParams, $rootScope, $location) {
-
-    var self = this;
-    console.log("getting one event");
-    console.log($routeParams.id);
-    $http.get('/events/' + $routeParams.id).then(function(response) {
-        console.log("Got event");
-        console.log(response.data);
-        self.event_info = response.data;
-    });
-
-    self.joinEvent = function () {
-        console.log("joining event");
-        $http.get('events/' + $routeParams.id + '/join/' + $rootScope.username)
-            .then( function (response) {
-                console.log("Response from joining");
-                console.log(response.data);
-                $location.path('#/events');
-        })
-    }
+    // self.addCharacter = function () {
+    //     console.log("adding character");
+    // }
 
 });

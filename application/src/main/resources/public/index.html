@@ -32,6 +32,8 @@
     <ul class="nav navbar-nav">
         <li><a href="#/">Home</a></li>
         <li ng-show="authenticated"><a href="#/events">Events</a></li>
+        <!--<li ng-show="authenticated"><a ng-href="#/users/{{username}}">My Profile</a></li>-->
+        <li ng-show="authenticated"><a ng-href="#/user">My Profile</a></li>
         <!--<li><a>Characters</a></li> -->
     </ul>
 
@@ -48,6 +50,7 @@
 <div ng-view class="container"></div>
 
 <script src="js/main.js"></script>
+<script src="js/event_controller.js"></script>
 </body>
 
 </html>
