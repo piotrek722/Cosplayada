@@ -82,11 +82,6 @@ app.controller('navigation', function($rootScope, $http, $location, $route) {
                 $rootScope.username = credentials.username;
             });
 
-            // $http.get('/users/' + $rootScope.username, {}).then(function (response) {
-            //     console.log("Getting my id");
-            //     $rootScope.userid = response.data;
-            //     console.log(response.data);
-            // });
 
     };
 
@@ -115,16 +110,6 @@ app.controller('navigation', function($rootScope, $http, $location, $route) {
                 $location.path("/logout");
             });
         };
-
-    // $http.get('/users/' + $rootScope.username)
-    //     .then( function (response) {
-    //         self.user_info = response.data;
-    //         console.log("Response from user");
-    //         console.log(response.data);
-    //     }, function onError (response) {
-    //         console.log("Error");
-    //         console.log(response.data);
-    //     })
 
 });
 
@@ -174,25 +159,8 @@ app.controller('signup', function($rootScope, $http, $location, $route) {
                 
             });
         };
-    });
-
-
-
-
-app.controller('user_controller', function($rootScope, $http, $location, $route) {
-
-    var self = this;
-    $rootScope.user_info = {};
-
-    console.log('showing user');
-    $http.get('/users/'+$rootScope.username, {}).then(function (response) {
-        $rootScope.user_info = response.data;
-        console.log(response.data);
-        // $location.path('/users/'+$rootScope.username);
-    });
-
-    // self.addCharacter = function () {
-    //     console.log("adding character");
-    // }
-
 });
+
+
+
+

@@ -10,10 +10,9 @@ public class Character {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "userId", nullable = false)
-//    @Column         //cannot be joined, logged in user id should go here while creating
-//    private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID", nullable = false)
+    private User user;
 
     @Column
     private String name;
@@ -31,6 +30,12 @@ public class Character {
         this.name = name;
     }
 
+    public Character(User user, String name, String description) {
+        this.user = user;
+        this.name = name;
+        this.description = description;
+    }
+
     public long getId() {
         return id;
     }
@@ -38,14 +43,6 @@ public class Character {
     public void setId(long id) {
         this.id = id;
     }
-
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
 
     public String getName() {
         return name;
@@ -61,5 +58,13 @@ public class Character {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

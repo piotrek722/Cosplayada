@@ -25,6 +25,9 @@ public class User {
                     nullable = false, updatable = false) })
     private Set<Event> events;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<Character> characters;
+
     public User() {    }
 
     public User(long id, String nickname) {
@@ -58,14 +61,14 @@ public class User {
         this.nickname = nickname;
     }
 
- /*   public Set<Character> getCharacters() {
+    public Set<Character> getCharacters() {
         return characters;
     }
 
     public void setCharacters(Set<Character> characters) {
         this.characters = characters;
     }
-*/
+
     public long getUserId() {
         return userId;
     }

@@ -1,29 +1,42 @@
 package pl.edu.agh.tai.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import pl.edu.agh.tai.model.CharacterInfo;
+import pl.edu.agh.tai.model.User;
 import pl.edu.agh.tai.repository.CharacterRepository;
 import pl.edu.agh.tai.model.Character;
+import pl.edu.agh.tai.repository.UserRepository;
 
-@Controller
+@RestController
 public class CharacterController {
 
-    @RequestMapping(value = "/characters/add", method = RequestMethod.POST)
-    @ResponseBody
-    public String create(String name) {
+    @RequestMapping(value = "/characters/add")
+    public Boolean create(CharacterInfo characterInfo) {
+
+        System.out.println("Character to add: " + characterInfo.getName());
         try {
-            Character character = new Character(name);
-            characterRepository.save(character);
+            User user = userRepository.findByNickname(characterInfo.getUser());
+            if (user != null) {
+                Character character = new Character(user, characterInfo.getName(), characterInfo.getDescription());
+                System.out.println("Adding character to user: " + user.getNickname());
+                characterRepository.save(character);
+            } else {
+                System.out.println("cannot find user " + characterInfo.getUser());
+            }
+
         }
         catch (Exception ex) {
-            return "Error creating the character: " + ex.toString();
+            ex.printStackTrace();
+            return false;
         }
-        return "Character created";
+        return true;
     }
 
     @Autowired
     private CharacterRepository characterRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 }
