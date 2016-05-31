@@ -35,6 +35,10 @@ app.config(function($routeProvider, $httpProvider) {
         templateUrl: 'user.html',
         controller: 'user_controller',
         controllerAs: 'controller'
+    }).when('/mycharacters/:id', {
+        templateUrl: 'character.html',
+        controller: 'character_controller',
+        controllerAs: 'controller'
     }).otherwise('/');
 
     //$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

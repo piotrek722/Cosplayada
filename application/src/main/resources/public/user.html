@@ -1,9 +1,29 @@
-<h>User profile</h>
-<div ng-controller="user_controller">
+<div ng-app="main" ng-controller="user_controller">
+    <h>User profile</h>
 <p>Id is: {{controller.user_info.userId}}</p>
 <p>Username is: {{controller.user_info.nickname}}</p>
 <br>
-<p>Characters</p>
+
+    <div class="container">
+        <h2>Characters</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="x in characters">
+                <td>{{ x.id }}</td>
+                <td><a ng-href="#/mycharacters/{{x.id}}">{{ x.name }}</a></td>
+                <td> {{ x.description }} </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p>Add new character</p>
 <form role="form" class="col-lg-3 col-md-3 col-sm-4 col-xs-8" ng-submit="controller.addCharacter()">
     <div class="form-group">
         <label for="name">Character name</label>
@@ -14,4 +34,6 @@
     </div>
     <button type="submit" class="btn btn-primary">Add</button>
 </form>
+
+
 </div>

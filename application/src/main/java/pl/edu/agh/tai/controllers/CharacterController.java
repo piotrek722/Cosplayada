@@ -49,6 +49,11 @@ public class CharacterController {
 
     }
 
+    @RequestMapping(value = "users/{name}/characters/{id}")
+    public Character getCharacter(@PathVariable String name, @PathVariable long id) {
+        return characterRepository.findOne(id);
+    }
+
     @Autowired
     private CharacterRepository characterRepository;
 
