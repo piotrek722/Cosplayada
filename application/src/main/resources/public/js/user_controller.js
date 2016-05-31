@@ -4,7 +4,13 @@ app.controller('user_controller', function($rootScope, $http, $location, $route)
 
     console.log('showing user');
     $http.get('/users/'+$rootScope.username, {}).then(function (response) {
-        self.user_info = response.data;
+        console.log("Got user details");
+        console.log(response.data.nickname);
+        self.user_info = {
+            userId : response.data.id,
+            nickname : response.data.nickname
+        };
+        console.log(self.user_info);
         console.log(response.data);
     });
 
@@ -41,6 +47,16 @@ app.controller('user_controller', function($rootScope, $http, $location, $route)
                 console.log("error adding character");
             }
         });
-    }
+    };
+
+    $rootScope.characters = {};
+
+    console.log('showing characters');
+    $http.get('/users/'+$rootScope.username+'/characters', {}).then(function (response) {
+        console.log("characters: ");
+        $rootScope.characters = response.data;
+        console.log(response.data);
+    });
+    
 
 });

@@ -1,6 +1,9 @@
 package pl.edu.agh.tai.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name="characters")
@@ -8,10 +11,12 @@ public class Character {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "CHARACTER_ID")
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", nullable = false)
+    @JsonBackReference
     private User user;
 
     @Column
@@ -19,6 +24,14 @@ public class Character {
 
     @Column
     private String description;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "character_events", joinColumns = {
+            @JoinColumn(name = "CHARACTER_ID", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "EVENT_ID",
+                    nullable = false, updatable = false) })
+    @JsonBackReference
+    private Set<Event> events;
 
     //photo
 
@@ -66,5 +79,13 @@ public class Character {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Set<Event> events) {
+        this.events = events;
     }
 }

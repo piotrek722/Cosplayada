@@ -48,17 +48,56 @@ app.controller('add_events_controller', function($rootScope, $http, $location, $
 app.controller('event_controller', function($http, $routeParams, $rootScope, $location) {
 
     var self = this;
-    console.log("getting one event");
-    console.log($routeParams.id);
-    $http.get('/events/' + $routeParams.id).then(function(response) {
-        console.log("Got event");
-        console.log(response.data);
-        self.event_info = response.data;
-    });
+
+    self.currentCharacter = {};
+
+    $rootScope.characters = {};
+
+    var getEvent = function () {
+        console.log("getting one event");
+        console.log($routeParams.id);
+        $http.get('/events/' + $routeParams.id).then(function(response) {
+            console.log("Got event");
+            console.log(response.data);
+            self.event_info = response.data;
+
+        });
+    };
+
+
+    var getCharacters = function () {
+        console.log('showing characters');
+        $http.get('/users/'+$rootScope.username+'/characters', {}).then(function (response) {
+            console.log("characters: ");
+            $rootScope.characters = response.data;
+            console.log(response.data);
+        });
+    };
+
+    var set_character = function () {
+        console.log("setting current character");
+        $rootScope.characterId = self.currentCharacter.id;
+        console.log(self.currentCharacter);
+        console.log("Current character set");
+
+    };
+
+    self.setCharacter = function (id) {
+        console.log("setting current character in setcharacter");
+        $rootScope.characterId = id;
+        console.log(id);
+        console.log("Current character set");
+    };
+
+    getCharacters();
+    getEvent();
+
+    set_character();
 
     self.joinEvent = function () {
+
         console.log("joining event");
-        $http.post('events/' + $routeParams.id + '/join/' + $rootScope.username)
+        $http.post('events/' + $routeParams.id + '/join/' +$rootScope.characterId, {})
             .then( function (response) {
                 console.log("Response from joining");
                 console.log(response.data);

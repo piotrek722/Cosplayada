@@ -1,5 +1,7 @@
 package pl.edu.agh.tai.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -18,14 +20,15 @@ public class User {
     @Column
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_events", joinColumns = {
-            @JoinColumn(name = "USER_ID", nullable = false, updatable = false) },
-            inverseJoinColumns = { @JoinColumn(name = "EVENT_ID",
-                    nullable = false, updatable = false) })
-    private Set<Event> events;
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinTable(name = "user_events", joinColumns = {
+//            @JoinColumn(name = "USER_ID", nullable = false, updatable = false) },
+//            inverseJoinColumns = { @JoinColumn(name = "EVENT_ID",
+//                    nullable = false, updatable = false) })
+//    private Set<Event> events;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @JsonManagedReference
     private Set<Character> characters;
 
     public User() {    }
@@ -85,11 +88,11 @@ public class User {
         this.password = password;
     }
 
-    public Set<Event> getEvents() {
-        return events;
-    }
-
-    public void setEvents(Set<Event> events) {
-        this.events = events;
-    }
+//    public Set<Event> getEvents() {
+//        return events;
+//    }
+//
+//    public void setEvents(Set<Event> events) {
+//        this.events = events;
+//    }
 }

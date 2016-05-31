@@ -5,8 +5,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import pl.edu.agh.tai.model.Character;
 import pl.edu.agh.tai.model.Event;
 import pl.edu.agh.tai.model.User;
+import pl.edu.agh.tai.repository.CharacterRepository;
 import pl.edu.agh.tai.repository.EventRepository;
 import pl.edu.agh.tai.model.EventInfo;
 import pl.edu.agh.tai.repository.UserRepository;
@@ -45,14 +47,17 @@ public class EventController {
         return eventRepository.findById(id);
     }
 
-    @RequestMapping(value = "/events/{id}/join/{username}")
-    public Boolean joinEvent(@PathVariable long id, @PathVariable String username) {
+    @RequestMapping(value = "/events/{id}/join/{characterId}")
+    public Boolean joinEvent(@PathVariable long id, @PathVariable long characterId) {
+        System.out.println("Joining for: " + id + " character " + characterId);
         Event event = eventRepository.findById(id);
-        User user = userRepository.findByNickname(username);
-        if (event != null && user != null) {
-            event.getUserSet().add(user);
-            user.getEvents().add(event);
-            userRepository.save(user);
+        //User user = userRepository.findByNickname(username);
+        Character character = characterRepository.findOne(characterId);
+        if (event != null && character != null) {
+            event.getCharacterSet().add(character);
+            character.getEvents().add(event);
+           // userRepository.save(user);
+            characterRepository.save(character);
             System.out.println("Joined user to " + event.getName());
             return true;
         }
@@ -64,4 +69,9 @@ public class EventController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CharacterRepository characterRepository;
+
+
 }

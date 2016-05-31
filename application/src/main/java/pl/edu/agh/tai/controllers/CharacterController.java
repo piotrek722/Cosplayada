@@ -1,6 +1,7 @@
 package pl.edu.agh.tai.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.agh.tai.model.CharacterInfo;
@@ -32,6 +33,20 @@ public class CharacterController {
             return false;
         }
         return true;
+    }
+
+    @RequestMapping(value = "/users/{name}/characters")
+    public Iterable<Character> getUserCharacters(@PathVariable String name) {
+        User user = userRepository.findByNickname(name);
+        if (user != null) {
+            System.out.println("Characters found: " + characterRepository.findByUser(user).toString());
+            return characterRepository.findByUser(user);
+        }
+        else {
+            System.out.println("cant fing user "+ user.getNickname());
+        }
+        return null;
+
     }
 
     @Autowired
