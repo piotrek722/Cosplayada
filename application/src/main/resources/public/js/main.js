@@ -123,7 +123,7 @@ app.controller('signup', function($rootScope, $http, $location, $route) {
             console.log("passwords match");
             var config = {
                 headers:{
-                    "LIB_AUTH_TOKEN" : self.credentials.role,
+                    "AUTH_TOKEN" : self.credentials.role,
                     "Accept" : "application/json"
                 }
             };

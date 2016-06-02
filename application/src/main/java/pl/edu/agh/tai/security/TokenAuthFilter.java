@@ -31,7 +31,7 @@ public class TokenAuthFilter extends OncePerRequestFilter {
 
         // if there is an auth token, create an Authentication object
         if (authToken != null) {
-            Authentication auth = new LibraryAuthentication(authToken);
+            Authentication auth = new UserAuthentication(authToken);
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
 

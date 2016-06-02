@@ -7,18 +7,16 @@ import org.springframework.stereotype.Component;
 import java.util.Collection;
 
 @Component
-public class LibraryAuthentication implements Authentication {
+public class UserAuthentication implements Authentication {
 
     private static final long serialVersionUID = 1L;
 
     private String token;
     private Collection<? extends GrantedAuthority> grants;
 
-    public LibraryAuthentication() {
+    public UserAuthentication() {}
 
-    }
-
-    public LibraryAuthentication(String token)  {
+    public UserAuthentication(String token)  {
         this.token = token;
     }
 

@@ -9,6 +9,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
+import pl.edu.agh.tai.util.SecurityConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +17,8 @@ import java.util.List;
 @Component
 public class TokenAuthProvider implements AuthenticationProvider {
 
-    @Value("${fpl.auth.token}")
-    private String fplKey;
-
-    @Value("${public.auth.token}")
-    private String publicKey;
+    @Value("${user.auth.token}")
+    private String userKey;
 
     @Override
     public Authentication authenticate(Authentication auth)
@@ -30,33 +28,28 @@ public class TokenAuthProvider implements AuthenticationProvider {
         String token = auth.getCredentials().toString();
 
         // hash the token in order to compare to value in database  / property file
-        String hashedToken = new Md5PasswordEncoder().encodePassword(token, LibraryConstants.HASH_SALT);
+        String hashedToken = new Md5PasswordEncoder().encodePassword(token, SecurityConstants.HASH_SALT);
 
         // construct a new authentication object with correct grants
         List<GrantedAuthority> grants = new ArrayList<>();
-        LibraryAuthentication libAuth = new LibraryAuthentication(token);
+        UserAuthentication userAuth = new UserAuthentication(token);
 
         // do the authentication (compare against DB / properties)
-        if (hashedToken.equals(fplKey)) {
-            grants.add(new SimpleGrantedAuthority(LibraryConstants.ROLE_LIBRARIAN));
-            libAuth.setAuthorities(grants);
-            libAuth.setAuthenticated(true);
-        }
-        else if (hashedToken.equals(publicKey)) {
-            grants.add(new SimpleGrantedAuthority(LibraryConstants.ROLE_PUBLIC));
-            libAuth.setAuthorities(grants);
-            libAuth.setAuthenticated(true);
+        if (hashedToken.equals(userKey)) {
+            grants.add(new SimpleGrantedAuthority(SecurityConstants.ROLE_USER));
+            userAuth.setAuthorities(grants);
+            userAuth.setAuthenticated(true);
         }
         else    {
             throw new BadCredentialsException("Invalid token " + token);
         }
 
-        return libAuth;
+        return userAuth;
     }
 
     @Override
     public boolean supports(Class<?> arg0) {
-        return (LibraryAuthentication.class.isAssignableFrom(arg0));
+        return (UserAuthentication.class.isAssignableFrom(arg0));
 
     }
 }

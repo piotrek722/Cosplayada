@@ -17,8 +17,10 @@
             <input type="password" class="form-control" id="repeat_password" name="repeat_password" ng-model="controller.credentials.repeat_password"/>
         </div>
         <div class="form-group">
-            <label for="role">Role:</label>
-            <input type="text" class="form-control" id="role" name="role" ng-model="controller.credentials.role"/>
+            <label >Role:</label>
+            <select class="form-control selectpicker" id="role" name="role" ng-model="controller.credentials.role">
+                <option>user</option>
+            </select>
         </div>
         <button type="submit" class="btn btn-primary">Sign Up</button>
     </form>

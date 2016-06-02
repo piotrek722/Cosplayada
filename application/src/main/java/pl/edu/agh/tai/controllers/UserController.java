@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.edu.agh.tai.model.LoginInfo;
 import pl.edu.agh.tai.model.User;
 import pl.edu.agh.tai.repository.UserRepository;
-import pl.edu.agh.tai.security.ILibraryService;
-import pl.edu.agh.tai.security.LibraryException;
+import pl.edu.agh.tai.services.IUserService;
+import pl.edu.agh.tai.util.UserException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,14 +21,8 @@ import java.util.Map;
 @RestController
 public class UserController {
 
-//    @RequestMapping(value="/user")
-//    public Principal user(Principal user) {
-//        return user;
-//    }
-
-
     @Autowired
-    private ILibraryService libraryService;
+    private IUserService userService;
 
     @Autowired
     private UserRepository userRepository;
@@ -47,11 +41,11 @@ public class UserController {
     }
 
     @RequestMapping(path = "/user", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getRole() throws LibraryException {
+    public ResponseEntity<?> getRole() throws UserException {
         // dummy method
         Map<String, Object> retMap = new HashMap<String, Object>();
 
-        retMap.put("role", libraryService.getRole());
+        retMap.put("role", userService.getRole());
 
         ResponseEntity<Map<String, Object>> retValue = new ResponseEntity<Map<String,Object>>(retMap, HttpStatus.OK);
         return retValue;

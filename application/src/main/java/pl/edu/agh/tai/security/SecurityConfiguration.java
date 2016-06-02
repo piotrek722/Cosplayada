@@ -49,8 +49,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //          should not be authenticated, so we add it here
                 .antMatchers("/","/webjars/**", "/*.html").permitAll()
                 // all other requests must be authenticated
-                .antMatchers("/user/**").hasRole("PUBLIC")
-                .antMatchers("/events").hasRole("LIBRARIAN")
+                .antMatchers("/user/**").hasRole("USER")
+                .antMatchers("/events").hasRole("USER")
                 .and().authorizeRequests()
                 .anyRequest().fullyAuthenticated()
                 .and()
