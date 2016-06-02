@@ -11,6 +11,7 @@ public class HomeController {
 
     @RequestMapping(value="/resource")
     public Map<String, Object> home() {
+        //System.out.println("User token : " + new Md5PasswordEncoder().encodePassword("user", "tai12345"));
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("content", "Hello on Cosplayada site!");
         return model;

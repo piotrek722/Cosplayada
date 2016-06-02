@@ -52,10 +52,6 @@ app.controller('navigation', function($rootScope, $http, $location, $route) {
 
     var self = this;
 
-    self.tab = function(route) {
-        return $route.current && route === $route.current.controller;
-    };
-
     var authenticate = function(credentials, callback) {
 
         var headers = credentials ? {
@@ -80,81 +76,72 @@ app.controller('navigation', function($rootScope, $http, $location, $route) {
 
     };
 
-        self.credentials = {};
-        self.login = function() {
-            authenticate(self.credentials, function(authenticated) {
-                if (authenticated) {
-                    console.log("Login succeeded");
-                    $location.path("/");
-                    self.error = false;
-                    $rootScope.authenticated = true;
-                } else {
-                    console.log("Login failed");
-                    $location.path("/login");
-                    self.error = true;
-                    $rootScope.authenticated = false;
-                }
-            })
-        };
-
-        self.logout = function() {
-            console.log("trying to log out");
-            $http.post('logout', {}).finally(function() {
+    self.credentials = {};
+    self.login = function() {
+        authenticate(self.credentials, function(authenticated) {
+            if (authenticated) {
+                console.log("Login succeeded");
+                $location.path("/");
+                self.error = false;
+                $rootScope.authenticated = true;
+            } else {
+                console.log("Login failed");
+                $location.path("/login");
+                self.error = true;
                 $rootScope.authenticated = false;
-                console.log("Logout succeeded");
-                $location.path("/logout");
-            });
-        };
+            }
+        })
+    };
+
+    self.logout = function() {
+        console.log("trying to log out");
+        $http.post('logout', {}).finally(function() {
+            $rootScope.authenticated = false;
+            console.log("Logout succeeded");
+            $location.path("/logout");
+        });
+    };
 
 });
 
 app.controller('signup', function($rootScope, $http, $location, $route) {
 
     var self = this;
+    self.error = "";
     self.credentials = {};
 
-    var check_password = function(credentials, callback) {
-        if (credentials.password == credentials.repeat_password) {
-            $rootScope.checked = true;
-            console.log("passwords match");
-
-            var params = {
-                username : credentials.username,
-                password : credentials.password
-            };
-            var user = {
-                params: params
-            };
-
-            console.log("trying to add user");
-            $http.get("/users/add/", user).then(function(response) {
-                console.log("added "+ credentials.username);
-                console.log(response.data);
-            });
-
-            callback && callback($rootScope.checked);
-        } else {
-            $rootScope.checked = false;
-            console.log("passwords dont match");
-        }
-    };
-
     self.signup = function() {
-        check_password(self.credentials, function(checked) {
 
-            console.log("inside singup");
-
-                if (checked) {
-                    console.log("user successfully added");
-                    $location.path("/");
-                } else {
-                    console.log("Signup failed");
-                    $location.path("/signup");
-                }
-                
-            });
+        var user = {
+            username : self.credentials.username,
+            password : self.credentials.password
         };
-    });
+
+
+        if (self.credentials.repeat_password == self.credentials.password) {
+
+            console.log("passwords match");
+            var config = {
+                headers:{
+                    "LIB_AUTH_TOKEN" : self.credentials.role,
+                    "Accept" : "application/json"
+                }
+            };
+            $http.post("/user/add", user,config)
+                .then(function (response) {
+                    $location.path("/login");
+                    console.log("User " + user.username + " successfully added");
+                },
+                function(response){
+                    self.error = "Signup Failed";  // todo check response status
+                });
+
+        } else {
+           self.error = "Passwords don't match";
+        }
+
+    };
+});
 
 
 app.controller('events_controller', function($rootScope, $http, $location, $route) {
