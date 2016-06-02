@@ -25,6 +25,9 @@ public class Character {
     @Column
     private String description;
 
+    @Column
+    private String photo;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "character_events", joinColumns = {
             @JoinColumn(name = "CHARACTER_ID", nullable = false, updatable = false) },
@@ -33,7 +36,6 @@ public class Character {
     @JsonBackReference
     private Set<Event> events;
 
-    //photo
 
 
     public Character() {
@@ -47,6 +49,13 @@ public class Character {
         this.user = user;
         this.name = name;
         this.description = description;
+    }
+
+    public Character(User user, String name, String description, String photo) {
+        this.user = user;
+        this.name = name;
+        this.description = description;
+        this.photo = photo;
     }
 
     public long getId() {
@@ -87,5 +96,13 @@ public class Character {
 
     public void setEvents(Set<Event> events) {
         this.events = events;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

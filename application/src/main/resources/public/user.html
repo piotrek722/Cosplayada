@@ -1,39 +1,109 @@
 <div ng-app="main" ng-controller="user_controller">
-    <h>User profile</h>
-<p>Id is: {{controller.user_info.userId}}</p>
-<p>Username is: {{controller.user_info.nickname}}</p>
-<br>
+
+    <div class="container">
+        <div>
+            <h2>Your profile</h2>
+        </div>
+        <div class="col-lg-3">
+            <br/>
+            <p><img src="https://tracker.moodle.org/secure/attachment/30912/f3.png" width="200px" height="270px"></p>
+        </div>
+        <div class="col-lg-5">
+            <br/>
+            <p>Id is: {{controller.user_info.userId}}</p>
+            <p>Username is: {{controller.user_info.nickname}}</p>
+        </div>
+        <div class="col-lg-4"></div>
+
+        <br/>
+    </div>
+
+    <!--<div class="container">-->
+        <!--<h2>Characters</h2>-->
+        <!--<p>Here are characters you added:</p>-->
+        <!--<div class="row">-->
+            <!--<div class="col-lg-3">-->
+                <!--<a href="#/" class="thumbnail">-->
+                    <!--<p>Gandalf</p>-->
+                    <!--<img src="http://vignette2.wikia.nocookie.net/lotr/images/e/e7/Gandalf_the_Grey.jpg/revision/latest?cb=20121110131754" style="width:200px;height:300px">-->
+                <!--</a>-->
+            <!--</div>-->
+            <!--<div class="col-lg-3">-->
+                <!--<a href="#/" class="thumbnail">-->
+                    <!--<p>Batman</p>-->
+                    <!--<img src="http://orig01.deviantart.net/4689/f/2015/131/c/a/ben_affleck_as_batman_by_luisbury_zine_net-d8t28en.jpg" style="width:200px;height:300px">-->
+                <!--</a>-->
+            <!--</div>-->
+            <!--<div class="col-lg-3">-->
+                <!--<a href="#/" class="thumbnail">-->
+                    <!--<p>Shrek</p>-->
+                    <!--<img src="https://upload.wikimedia.org/wikipedia/en/7/73/Shrekcharacter.jpg" style="width:200px;height:300px">-->
+                <!--</a>-->
+            <!--</div>-->
+            <!--<div class="col-lg-3">-->
+                <!--<a href="#/" class="thumbnail">-->
+                    <!--<p>Minionek</p>-->
+                    <!--<img src="http://pu.i.wp.pl/bloog/98142508/55325436/1376633_635448896486_W4_big.jpg" style="width:200px;height:300px">-->
+                <!--</a>-->
+            <!--</div>-->
+            <!--<div class="col-lg-3">-->
+                <!--<a href="#/" class="thumbnail">-->
+                    <!--<p>Ork</p>-->
+                    <!--<img src="http://1.fwcdn.pl/an/867323/69755.12.jpg" style="width:200px;height:300px">-->
+                <!--</a>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
 
     <div class="container">
         <h2>Characters</h2>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Description</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="x in characters">
-                <td>{{ x.id }}</td>
-                <td><a ng-href="#/mycharacters/{{x.id}}">{{ x.name }}</a></td>
-                <td> {{ x.description }} </td>
-            </tr>
-            </tbody>
-        </table>
+        <p>Here are characters you added:</p>
+        <div class="row">
+            <div class="col-lg-3" ng-repeat="x in characters">
+                <a ng-href="#/mycharacters/{{x.id}}" class="thumbnail">
+                    <p>{{ x.name }}</p>
+                    <img src="{{x.photo}}" style="width:200px;height:300px">
+                </a>
+            </div>
+        </div>
     </div>
-    <p>Add new character</p>
-<form role="form" class="col-lg-3 col-md-3 col-sm-4 col-xs-8" ng-submit="controller.addCharacter()">
-    <div class="form-group">
-        <label for="name">Character name</label>
-        <input type="text" class="form-control" id="name" name="name" ng-model="controller.character.name"/>
-        <label for="description">Description</label>
-        <input type="text" class="form-control" id="description" name="description" ng-model="controller.character.description"/>
 
+    <!--<div class="container">-->
+        <!--<h2>Characters</h2>-->
+        <!--<table class="table">-->
+            <!--<thead>-->
+            <!--<tr>-->
+                <!--<th>#</th>-->
+                <!--<th>Name</th>-->
+                <!--<th>Description</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr ng-repeat="x in characters">-->
+                <!--<td>{{ x.id }}</td>-->
+                <!--<td><a ng-href="#/mycharacters/{{x.id}}">{{ x.name }}</a></td>-->
+                <!--<td> {{ x.description }} </td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
+    <!--</div>-->
+
+    <div class="container">
+    <h1>Add new character</h1>
+        <form role="form" class="col-lg-3 col-md-3 col-sm-4 col-xs-8" ng-submit="controller.addCharacter()">
+            <div class="form-group">
+                <label for="name">Character name</label>
+                <input type="text" class="form-control" id="name" name="name" ng-model="controller.character.name"/>
+                <label for="description">Description</label>
+                <input type="text" class="form-control" id="description" name="description" ng-model="controller.character.description"/>
+                <label for="photo">Photo</label>
+                <input type="text" class="form-control" id="photo" name="photo" ng-model="controller.character.photo"/>
+
+            </div>
+            <button type="submit" class="btn btn-primary">Add</button>
+        </form>
     </div>
-    <button type="submit" class="btn btn-primary">Add</button>
-</form>
 
 
 </div>

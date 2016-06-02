@@ -1,4 +1,16 @@
-<div ng-controller="character_controller">
-<h>Character</h>
-<p>Name is: {{controller.character_info.name}}</p>
+<div class="container" ng-controller="character_controller">
+    <div>
+        <h2>{{controller.character_info.name}}</h2>
+    </div>
+    <div class="col-lg-3">
+        <br/>
+        <img src="{{controller.character_info.photo}}" width="200px" height="270px">
+    </div>
+    <div class="col-lg-5">
+        <br/>
+        <h3>Description</h3>
+        <p>{{controller.character_info.description}}</p>
+    </div>
+
+    <br/>
 </div>

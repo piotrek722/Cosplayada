@@ -6,6 +6,8 @@ public class CharacterInfo {
     private String user;
     private String name;
     private String description;
+    private String photo;
+
 
     public CharacterInfo() {
     }
@@ -14,6 +16,13 @@ public class CharacterInfo {
         this.user = user;
         this.name = name;
         this.description = description;
+    }
+
+    public CharacterInfo(String user, String name, String description, String photo) {
+        this.user = user;
+        this.name = name;
+        this.description = description;
+        this.photo = photo;
     }
 
     public String getUser() {
@@ -38,5 +47,13 @@ public class CharacterInfo {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

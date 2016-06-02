@@ -22,7 +22,8 @@ app.controller('user_controller', function($rootScope, $http, $location, $route)
         var params = {
             user : $rootScope.username,
             name : character.name,
-            description : character.description
+            description : character.description,
+            photo : character.photo
         };
 
         var character_info = {

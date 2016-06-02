@@ -20,7 +20,7 @@ public class CharacterController {
         try {
             User user = userRepository.findByNickname(characterInfo.getUser());
             if (user != null) {
-                Character character = new Character(user, characterInfo.getName(), characterInfo.getDescription());
+                Character character = new Character(user, characterInfo.getName(), characterInfo.getDescription(), characterInfo.getPhoto());
                 System.out.println("Adding character to user: " + user.getNickname());
                 characterRepository.save(character);
             } else {

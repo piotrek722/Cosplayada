@@ -9,7 +9,8 @@ app.controller('character_controller', function($rootScope, $http, $location, $r
         self.character_info = {
             idd: response.data.id,
             name: response.data.name,
-            description: response.data.description
+            description: response.data.description,
+            photo: response.data.photo
         };
         console.log(self.character_info);
         console.log(response.data);
