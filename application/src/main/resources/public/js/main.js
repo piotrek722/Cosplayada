@@ -45,126 +45,124 @@ app.config(function($routeProvider, $httpProvider) {
 
 });
 
-app.controller('home', function($http) {
+app.controller('home', function($http, TokenFactory) {
 
     var self = this;
 
-    $http.get('/resource').then(function(response) {
+    var config = {
+        headers:{
+            "AUTH_TOKEN" : TokenFactory.getValue(),
+            "Accept" : "application/json"
+        }
+    };
+
+    $http.get('/resource',config).then(function(response) {
         self.greeting = response.data;
     });
 
 });
 
 
-app.controller('navigation', function($rootScope, $http, $location, $route) {
+app.controller('navigation', function($rootScope, $http, $location, $route, TokenFactory) {
 
     var self = this;
+    self.error=false;
+    self.credentials = {};
 
-    self.tab = function(route) {
-        return $route.current && route === $route.current.controller;
-    };
+    self.login = function() {
 
-    var authenticate = function(credentials, callback) {
+        var config = {
+            headers:{
+                "AUTH_TOKEN" : self.credentials.username + ":" + self.credentials.password,
+                "Accept" : "application/json"
+            }
+        };
+        $http.get("/user",config)
+            .then(
+                function(response){
+                    if(response.data.role === "ROLE_USER"){
+                        self.error = false;
+                        $location.path("/");
+                        $rootScope.authenticated = true;
+                        TokenFactory.setValue(self.credentials.username + ":" + self.credentials.password);
+                    }else{
+                        self.error = true; // todo show be msg about error
+                        $rootScope.authenticated = false;
+                    }
 
-        var headers = credentials ? {
-            authorization : "Basic "
-            + btoa(credentials.username + ":"
-                + credentials.password)
-        } : {};
-
-            var params = {
-                username : credentials.username,
-                password : credentials.password
-            };
-            var user = {
-                params: params
-            };
-            $http.get('auth', user).then(function (response) {
-                console.log(response.data);
-                $rootScope.authenticated = response.data;
-                callback && callback($rootScope.authenticated);
-                $rootScope.username = credentials.username;
-            });
-
-
-    };
-
-        self.credentials = {};
-        self.login = function() {
-            authenticate(self.credentials, function(authenticated) {
-                if (authenticated) {
-                    console.log("Login succeeded");
-                    $location.path("/");
-                    self.error = false;
-                    $rootScope.authenticated = true;
-                } else {
+                },
+                function(response){
                     console.log("Login failed");
-                    $location.path("/login");
                     self.error = true;
                     $rootScope.authenticated = false;
-                }
-            })
-        };
 
-        self.logout = function() {
-            console.log("trying to log out");
-            $http.post('logout', {}).finally(function() {
-                $rootScope.authenticated = false;
-                console.log("Logout succeeded");
-                $location.path("/logout");
-            });
-        };
+                }
+            )
+
+
+    };
+
+    self.logout = function() {
+        console.log("trying to log out");
+        $http.post('logout', {}).finally(function() {
+            $rootScope.authenticated = false;
+            console.log("Logout succeeded");
+            $location.path("/logout");
+        });
+    };
 
 });
 
 app.controller('signup', function($rootScope, $http, $location, $route) {
 
     var self = this;
+    self.error = "";
     self.credentials = {};
 
-    var check_password = function(credentials, callback) {
-        if (credentials.password == credentials.repeat_password) {
-            $rootScope.checked = true;
-            console.log("passwords match");
-
-            var params = {
-                username : credentials.username,
-                password : credentials.password
-            };
-            var user = {
-                params: params
-            };
-
-            console.log("trying to add user");
-            $http.get("/users/add/", user).then(function(response) {
-                console.log("added "+ credentials.username);
-                console.log(response.data);
-            });
-
-            callback && callback($rootScope.checked);
-        } else {
-            $rootScope.checked = false;
-            console.log("passwords dont match");
-        }
-    };
-
     self.signup = function() {
-        check_password(self.credentials, function(checked) {
 
-            console.log("inside singup");
-
-                if (checked) {
-                    console.log("user successfully added");
-                    $location.path("/");
-                } else {
-                    console.log("Signup failed");
-                    $location.path("/signup");
-                }
-                
-            });
+        var user = {
+            username : self.credentials.username,
+            password : self.credentials.password,
+            role: self.credentials.role
         };
+
+        if (self.credentials.repeat_password == self.credentials.password) {
+
+            console.log("passwords match");
+            $http.post("/user/add", user)
+                .then(function (response) {
+                    $location.path("/login");
+                    console.log("User " + user.username + " successfully added");
+                },
+                function(response){
+                    self.error = "Signup Failed";  // todo check response status
+                });
+
+        } else {
+           self.error = "Passwords don't match";
+        }
+
+    };
 });
 
 
 
 
+app.constant('authToken', 'authToken');
+
+app.factory('TokenFactory', function() {
+    var authToken = {
+        value: "null:null"
+    };
+
+    authToken.setValue = function(val) {
+        this.value = val;
+    };
+
+    authToken.getValue = function() {
+        return this.value;
+    };
+
+    return authToken;
+});

@@ -20,24 +20,28 @@ public class User {
     @Column
     private String password;
 
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinTable(name = "user_events", joinColumns = {
-//            @JoinColumn(name = "USER_ID", nullable = false, updatable = false) },
-//            inverseJoinColumns = { @JoinColumn(name = "EVENT_ID",
-//                    nullable = false, updatable = false) })
-//    private Set<Event> events;
+    @Column
+    private String role;
+
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @JsonManagedReference
     private Set<Character> characters;
 
-    public User() {    }
+
+    public User(String nickname, String password, String role) {
+        this.nickname = nickname;
+        this.password = password;
+        this.role = role;
+    }
 
     public User(long id, String nickname) {
         this.userId =id;
         this.nickname = nickname;
     }
 
+    public User() {
+    }
 
     public User(String nickname) {
         this.nickname = nickname;
@@ -88,11 +92,11 @@ public class User {
         this.password = password;
     }
 
-//    public Set<Event> getEvents() {
-//        return events;
-//    }
-//
-//    public void setEvents(Set<Event> events) {
-//        this.events = events;
-//    }
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }
