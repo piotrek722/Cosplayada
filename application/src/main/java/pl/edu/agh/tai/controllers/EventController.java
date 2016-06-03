@@ -1,10 +1,7 @@
 package pl.edu.agh.tai.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.tai.model.Character;
 import pl.edu.agh.tai.model.Event;
 import pl.edu.agh.tai.model.User;
@@ -28,7 +25,9 @@ public class EventController {
     }
 
     @RequestMapping(value = "/events/add")
-    public Boolean addEvent(EventInfo eventInfo) {
+    public Boolean addEvent(@RequestBody EventInfo eventInfo) {
+
+        System.out.println(eventInfo.getName());
         try {
             Event event = new Event(eventInfo.getName(), eventInfo.getCity());
             System.out.println("Event created with name: " + eventInfo.getName());

@@ -32,7 +32,7 @@ app.config(function($routeProvider, $httpProvider) {
         controller: 'event_controller',
         controllerAs: 'controller'
     }).when('/user', {
-        templateUrl: 'user.html',
+        templateUrl: 'userView.html',
         controller: 'user_controller',
         controllerAs: 'controller'
     }).when('/mycharacters/:id', {
@@ -68,6 +68,7 @@ app.controller('navigation', function($rootScope, $http, $location, $route, Toke
     var self = this;
     self.error=false;
     self.credentials = {};
+    $rootScope.username = "";
 
     self.login = function() {
 
@@ -84,6 +85,7 @@ app.controller('navigation', function($rootScope, $http, $location, $route, Toke
                         self.error = false;
                         $location.path("/");
                         $rootScope.authenticated = true;
+                        $rootScope.username = self.credentials.username;
                         TokenFactory.setValue(self.credentials.username + ":" + self.credentials.password);
                     }else{
                         self.error = true; // todo show be msg about error
@@ -129,6 +131,7 @@ app.controller('signup', function($rootScope, $http, $location, $route) {
 
         if (self.credentials.repeat_password == self.credentials.password) {
 
+            $rootScope.checked = true;
             console.log("passwords match");
             $http.post("/user/add", user)
                 .then(function (response) {
@@ -140,6 +143,7 @@ app.controller('signup', function($rootScope, $http, $location, $route) {
                 });
 
         } else {
+           $rootScope.checked = false;
            self.error = "Passwords don't match";
         }
 

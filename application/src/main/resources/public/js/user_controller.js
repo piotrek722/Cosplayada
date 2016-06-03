@@ -1,9 +1,16 @@
-app.controller('user_controller', function($rootScope, $http, $location, $route) {
+app.controller('user_controller', function($rootScope, $http, $location, $route, TokenFactory) {
 
     var self = this;
 
+    var config = {
+        headers:{
+            "AUTH_TOKEN" : TokenFactory.getValue(),
+            "Accept" : "application/json"
+        }
+    };
+
     console.log('showing user');
-    $http.get('/users/'+$rootScope.username, {}).then(function (response) {
+    $http.get('/users/'+$rootScope.username, config).then(function (response) {
         console.log("Got user details");
         console.log(response.data.nickname);
         self.user_info = {
@@ -19,20 +26,16 @@ app.controller('user_controller', function($rootScope, $http, $location, $route)
     var check_character = function (character, callback) {
         $rootScope.checkedCh = true;
 
-        var params = {
+        var character_info = {
             user : $rootScope.username,
             name : character.name,
             description : character.description,
             photo : character.photo
         };
 
-        var character_info = {
-            params : params
-        };
-
         console.log(character_info);
 
-        $http.get('/characters/add', character_info).then(function(response) {
+        $http.post('/characters/add', character_info, config).then(function(response) {
             console.log("Adding new character");
             console.log(response.data);
         });
@@ -53,7 +56,7 @@ app.controller('user_controller', function($rootScope, $http, $location, $route)
     $rootScope.characters = {};
 
     console.log('showing characters');
-    $http.get('/users/'+$rootScope.username+'/characters', {}).then(function (response) {
+    $http.get('/users/'+$rootScope.username+'/characters', config).then(function (response) {
         console.log("characters: ");
         $rootScope.characters = response.data;
         console.log(response.data);

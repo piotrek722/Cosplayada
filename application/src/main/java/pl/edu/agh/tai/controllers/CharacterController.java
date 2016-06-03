@@ -1,9 +1,7 @@
 package pl.edu.agh.tai.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.edu.agh.tai.model.CharacterInfo;
 import pl.edu.agh.tai.model.User;
 import pl.edu.agh.tai.repository.CharacterRepository;
@@ -14,7 +12,7 @@ import pl.edu.agh.tai.repository.UserRepository;
 public class CharacterController {
 
     @RequestMapping(value = "/characters/add")
-    public Boolean create(CharacterInfo characterInfo) {
+    public Boolean create(@RequestBody CharacterInfo characterInfo) {
 
         System.out.println("Character to add: " + characterInfo.getName());
         try {

@@ -50,7 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/","/webjars/**", "/*.html","/user/add").permitAll()
                 // all other requests must be authenticated
                 .antMatchers("/user/**", "/resource").hasRole("USER")
-                .antMatchers("/events").hasRole("USER")
+                .antMatchers("/events/**", "/mycharacters/**", "/users/**", "/characters/**", "userView.html").hasRole("USER")
                 .and().authorizeRequests()
                 .anyRequest().fullyAuthenticated()
                 .and()

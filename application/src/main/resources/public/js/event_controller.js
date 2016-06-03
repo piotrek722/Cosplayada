@@ -1,32 +1,46 @@
-app.controller('events_controller', function($rootScope, $http, $location, $route) {
+app.controller('events_controller', function($rootScope, $http, $location, $route, TokenFactory) {
 
     var self = this;
+
+    var config = {
+        headers:{
+            "AUTH_TOKEN" : TokenFactory.getValue(),
+            "Accept" : "application/json"
+        }
+    };
+
     $rootScope.evenstArray = {};
 
     console.log('showing events');
-    $http.get('/events', {}).then(function (response) {
+    $http.get('/events', config).then(function (response) {
         $rootScope.eventsArray = response.data;
         console.log(response.data);
     });
 
 });
 
-app.controller('add_events_controller', function($rootScope, $http, $location, $route) {
+app.controller('add_events_controller', function($rootScope, $http, $location, $route, TokenFactory) {
 
     var self = this;
+
     self.event = {};
     var check_event = function (event, callback) {
 
-        var params = {
+        var event_info = {
             name : event.name,
             city : event.city
         };
+        
+        console.log(event_info);
 
-        var event_info = {
-            params : params
+        var config = {
+            headers:{
+                "AUTH_TOKEN" : TokenFactory.getValue(),
+                "Accept" : "application/json"
+            }
         };
 
-        $http.get('/events/add', event_info).then(function(response) {
+        $http.post('/events/add', event_info, config).then(function(response) {
             console.log("Adding new event");
             console.log(response.data);
         });
@@ -34,6 +48,8 @@ app.controller('add_events_controller', function($rootScope, $http, $location, $
     };
 
     self.addEvent = function() {
+
+
         check_event(self.event, function(checked) {
             if (checked) {
                 console.log("added new event");
@@ -45,9 +61,16 @@ app.controller('add_events_controller', function($rootScope, $http, $location, $
     }
 });
 
-app.controller('event_controller', function($http, $routeParams, $rootScope, $location) {
+app.controller('event_controller', function($http, $routeParams, $rootScope, $location, TokenFactory) {
 
     var self = this;
+
+    var config = {
+        headers:{
+            "AUTH_TOKEN" : TokenFactory.getValue(),
+            "Accept" : "application/json"
+        }
+    };
 
     self.currentCharacter = {};
 
@@ -56,7 +79,7 @@ app.controller('event_controller', function($http, $routeParams, $rootScope, $lo
     var getEvent = function () {
         console.log("getting one event");
         console.log($routeParams.id);
-        $http.get('/events/' + $routeParams.id).then(function(response) {
+        $http.get('/events/' + $routeParams.id, config).then(function(response) {
             console.log("Got event");
             console.log(response.data);
             self.event_info = response.data;
@@ -67,7 +90,7 @@ app.controller('event_controller', function($http, $routeParams, $rootScope, $lo
 
     var getCharacters = function () {
         console.log('showing characters');
-        $http.get('/users/'+$rootScope.username+'/characters', {}).then(function (response) {
+        $http.get('/users/'+$rootScope.username+'/characters', config).then(function (response) {
             console.log("characters: ");
             $rootScope.characters = response.data;
             console.log(response.data);
@@ -97,7 +120,7 @@ app.controller('event_controller', function($http, $routeParams, $rootScope, $lo
     self.joinEvent = function () {
 
         console.log("joining event");
-        $http.post('events/' + $routeParams.id + '/join/' +$rootScope.characterId, {})
+        $http.post('events/' + $routeParams.id + '/join/' +$rootScope.characterId, {}, config)
             .then( function (response) {
                 console.log("Response from joining");
                 console.log(response.data);
