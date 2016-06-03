@@ -37,60 +37,61 @@ app.config(function($routeProvider, $httpProvider) {
 
 });
 
-app.controller('home', function($http) {
+app.controller('home', function($http, TokenFactory) {
 
     var self = this;
 
-    $http.get('/resource').then(function(response) {
+    var config = {
+        headers:{
+            "AUTH_TOKEN" : TokenFactory.getValue(),
+            "Accept" : "application/json"
+        }
+    };
+
+    $http.get('/resource',config).then(function(response) {
         self.greeting = response.data;
     });
 
 });
 
 
-app.controller('navigation', function($rootScope, $http, $location, $route) {
+app.controller('navigation', function($rootScope, $http, $location, $route, TokenFactory) {
 
     var self = this;
-
-    var authenticate = function(credentials, callback) {
-
-        var headers = credentials ? {
-            authorization : "Basic "
-            + btoa(credentials.username + ":"
-                + credentials.password)
-        } : {};
-
-            var params = {
-                username : credentials.username,
-                password : credentials.password
-            };
-            var user = {
-                params: params
-            };
-            $http.get('auth', user).then(function (response) {
-                console.log(response.data);
-                $rootScope.authenticated = response.data;
-                callback && callback($rootScope.authenticated);
-                $rootScope.username = credentials.username;
-            })
-
-    };
-
+    self.error=false;
     self.credentials = {};
+
     self.login = function() {
-        authenticate(self.credentials, function(authenticated) {
-            if (authenticated) {
-                console.log("Login succeeded");
-                $location.path("/");
-                self.error = false;
-                $rootScope.authenticated = true;
-            } else {
-                console.log("Login failed");
-                $location.path("/login");
-                self.error = true;
-                $rootScope.authenticated = false;
+
+        var config = {
+            headers:{
+                "AUTH_TOKEN" : self.credentials.username + ":" + self.credentials.password,
+                "Accept" : "application/json"
             }
-        })
+        };
+        $http.get("/user",config)
+            .then(
+                function(response){
+                    if(response.data.role === "ROLE_USER"){
+                        self.error = false;
+                        $location.path("/");
+                        $rootScope.authenticated = true;
+                        TokenFactory.setValue(self.credentials.username + ":" + self.credentials.password);
+                    }else{
+                        self.error = true; // todo show be msg about error
+                        $rootScope.authenticated = false;
+                    }
+
+                },
+                function(response){
+                    console.log("Login failed");
+                    self.error = true;
+                    $rootScope.authenticated = false;
+
+                }
+            )
+
+
     };
 
     self.logout = function() {
@@ -114,20 +115,14 @@ app.controller('signup', function($rootScope, $http, $location, $route) {
 
         var user = {
             username : self.credentials.username,
-            password : self.credentials.password
+            password : self.credentials.password,
+            role: self.credentials.role
         };
-
 
         if (self.credentials.repeat_password == self.credentials.password) {
 
             console.log("passwords match");
-            var config = {
-                headers:{
-                    "AUTH_TOKEN" : self.credentials.role,
-                    "Accept" : "application/json"
-                }
-            };
-            $http.post("/user/add", user,config)
+            $http.post("/user/add", user)
                 .then(function (response) {
                     $location.path("/login");
                     console.log("User " + user.username + " successfully added");
@@ -212,4 +207,22 @@ app.controller('event_controller', function($http, $routeParams, $rootScope, $lo
         })
     }
 
+});
+
+app.constant('authToken', 'authToken');
+
+app.factory('TokenFactory', function() {
+    var authToken = {
+        value: "null:null"
+    };
+
+    authToken.setValue = function(val) {
+        this.value = val;
+    };
+
+    authToken.getValue = function() {
+        return this.value;
+    };
+
+    return authToken;
 });

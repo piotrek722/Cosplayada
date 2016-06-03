@@ -1,7 +1,9 @@
 package pl.edu.agh.tai.security;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -21,18 +23,30 @@ public class TokenAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+            HttpServletResponse response, FilterChain filterChain)
+    throws ServletException, IOException {
 
         SecurityContext context = SecurityContextHolder.getContext();
 
-        // check if header contains auth token
-        String authToken = request.getHeader(tokenName);
+        try {
+            // check if header contains auth token
+            String authToken = request.getHeader(tokenName);
 
-        // if there is an auth token, create an Authentication object
-        if (authToken != null) {
-            Authentication auth = new UserAuthentication(authToken);
-            SecurityContextHolder.getContext().setAuthentication(auth);
+            // if there is an auth token, create an Authentication object
+            if (authToken != null)  {
+                // we are sending the credentials similar to basic HTTP <username>:<password>
+                // split the token by :
+                String[] creds = authToken.split(":");
+                UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(creds[0], creds[1]);
+                SecurityContextHolder.getContext().setAuthentication(token);
+
+            }
+        } catch (InternalAuthenticationServiceException internalAuthenticationServiceException) {
+            SecurityContextHolder.clearContext();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        } catch (AuthenticationException authenticationException) {
+            SecurityContextHolder.clearContext();
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authenticationException.getMessage());
         }
 
         // forward the request

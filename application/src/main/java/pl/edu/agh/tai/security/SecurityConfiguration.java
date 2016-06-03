@@ -47,9 +47,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // this includes our static resources
                 // **Note** : Our landing page ("/") is the login page that
                 //          should not be authenticated, so we add it here
-                .antMatchers("/","/webjars/**", "/*.html").permitAll()
+                .antMatchers("/","/webjars/**", "/*.html","/user/add").permitAll()
                 // all other requests must be authenticated
-                .antMatchers("/user/**").hasRole("USER")
+                .antMatchers("/user/**", "/resource").hasRole("USER")
                 .antMatchers("/events").hasRole("USER")
                 .and().authorizeRequests()
                 .anyRequest().fullyAuthenticated()

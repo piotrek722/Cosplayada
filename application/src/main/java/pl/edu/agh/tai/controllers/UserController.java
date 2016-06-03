@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import pl.edu.agh.tai.model.LoginInfo;
-import pl.edu.agh.tai.model.User;
 import pl.edu.agh.tai.repository.UserRepository;
 import pl.edu.agh.tai.services.IUserService;
 import pl.edu.agh.tai.util.UserException;
@@ -29,15 +28,14 @@ public class UserController {
 
     @RequestMapping(value="/user/add", method = RequestMethod.POST)
     public Boolean create(@RequestBody LoginInfo userinfo) {
+        boolean answer = false;
         try {
-            User user = new User(userinfo.getUsername(), userinfo.getPassword());
-            System.out.println("User created - name: " + user.getNickname() + " pass: " + user.getPassword());
-            userRepository.save(user);
+           answer = userService.addUser(userinfo);
         }
         catch (Exception ex) {
             return false;
         }
-        return true;
+        return answer;
     }
 
     @RequestMapping(path = "/user", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)

@@ -9,7 +9,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="USER_ID")
+    @Column(name="user_id")
     private long userId;
 
     @Column
@@ -18,6 +18,9 @@ public class User {
     @Column
     private String password;
 
+    @Column
+    private String role;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "user_events", joinColumns = {
             @JoinColumn(name = "USER_ID", nullable = false, updatable = false) },
@@ -25,13 +28,19 @@ public class User {
                     nullable = false, updatable = false) })
     private Set<Event> events;
 
-    public User() {    }
+    public User(String nickname, String password, String role) {
+        this.nickname = nickname;
+        this.password = password;
+        this.role = role;
+    }
 
     public User(long id, String nickname) {
         this.userId =id;
         this.nickname = nickname;
     }
 
+    public User() {
+    }
 
     public User(String nickname) {
         this.nickname = nickname;
@@ -88,5 +97,13 @@ public class User {
 
     public void setEvents(Set<Event> events) {
         this.events = events;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
