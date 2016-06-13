@@ -3,25 +3,42 @@
         {{controller.error}}
     </div>
 
-    <form role="form" class="col-lg-3 col-md-3 col-sm-4 col-xs-8" ng-submit="controller.signup()">
+    <div class="row">
+    <form role="form" class="col-lg-4 col-md-4 col-sm-4 col-xs-8 col-lg-offset-4 col-md-offset-4" ng-submit="controller.signup()">
         <div class="form-group">
             <label for="username">Username:</label>
-            <input type="text" class="form-control" id="username" name="username" ng-model="controller.credentials.username"/>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                <input type="text" class="form-control" id="username" name="username" ng-model="controller.credentials.username"/>
+            </div>
         </div>
         <div class="form-group">
             <label for="password">Password:</label>
-            <input type="password" class="form-control" id="password" name="password" ng-model="controller.credentials.password" />
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                <input type="password" class="form-control" id="password" name="password" ng-model="controller.credentials.password" />
+            </div>
         </div>
         <div class="form-group">
             <label for="password">Repeat password:</label>
-            <input type="password" class="form-control" id="repeat_password" name="repeat_password" ng-model="controller.credentials.repeat_password"/>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                <input type="password" class="form-control" id="repeat_password" name="repeat_password" ng-model="controller.credentials.repeat_password"/>
+            </div>
         </div>
         <div class="form-group">
             <label >Role:</label>
-            <select class="form-control selectpicker" id="role" name="role" ng-model="controller.credentials.role">
-                <option selected>user</option>
-            </select>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-list fa-fw"></i></span>
+                <select class="form-control selectpicker" id="role" name="role" ng-model="controller.credentials.role">
+                    <option selected="selected">user</option>
+                </select>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Sign Up</button>
+        <button type="submit" class="btn btn-primary pull-right">
+            Sign Up
+            <i class="fa fa-sign-in"></i>
+        </button>
     </form>
+    </div>
 </div>

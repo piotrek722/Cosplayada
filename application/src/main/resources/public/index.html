@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width = device-width, initial-scale= 1">
 
+    <!-- icons -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+
     <!-- css -->
     <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.6/css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="css/main.css">
@@ -30,10 +33,10 @@
     </div>
 
     <ul class="nav navbar-nav">
-        <li><a href="#/">Home</a></li>
-        <li ng-show="authenticated"><a href="#/events">Events</a></li>
+        <li><a href="#/"><i class="fa fa-home fa-fw"></i> Home</a></li>
+        <li ng-show="authenticated"><a href="#/events"><i class="fa fa-calendar fa-fw"></i> Events</a></li>
         <!--<li ng-show="authenticated"><a ng-href="#/users/{{username}}">My Profile</a></li>-->
-        <li ng-show="authenticated"><a ng-href="#/user">My Profile</a></li>
+        <li ng-show="authenticated"><a ng-href="#/user"><i class="fa fa-user fa-fw"></i> My Profile</a></li>
         <!--<li><a>Characters</a></li> -->
     </ul>
 
