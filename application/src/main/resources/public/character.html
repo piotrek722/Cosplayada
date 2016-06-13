@@ -1,15 +1,15 @@
 <div class="container" ng-controller="character_controller">
     <div>
-        <h2>{{controller.character_info.name}}</h2>
+        <h2>{{controller.character.name}}</h2>
     </div>
     <div class="col-lg-3">
         <br/>
-        <img src="{{controller.character_info.photo}}" width="200px" height="270px">
+        <img ng-src="data:image/JPEG;base64,{{controller.character.photo}}" width="200px" height="270px">
     </div>
     <div class="col-lg-5">
         <br/>
         <h3>Description</h3>
-        <p>{{controller.character_info.description}}</p>
+        <p>{{controller.character.description}}</p>
     </div>
 
     <br/>

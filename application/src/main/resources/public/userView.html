@@ -63,7 +63,9 @@
             <div class="col-lg-3" ng-repeat="x in characters">
                 <a ng-href="#/mycharacters/{{x.id}}" class="thumbnail">
                     <p>{{ x.name }}</p>
-                    <img src="{{x.photo}}" style="width:200px;height:300px">
+                    <img ng-src="data:image/JPEG;base64,{{x.photo}}" style="width:200px;height:300px">
+                    <!--<img src="{{x.photo}}" style="width:200px;height:300px">-->
+                    <!--<img class="img-responsive empImg" id="empImage" data-ng-src="'data:image/jpg;base64,'+{{x.photo}}" />-->
                 </a>
             </div>
         </div>

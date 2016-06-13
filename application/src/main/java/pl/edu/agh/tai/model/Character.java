@@ -3,6 +3,7 @@ package pl.edu.agh.tai.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.sql.Blob;
 import java.util.Set;
 
 @Entity
@@ -26,7 +27,8 @@ public class Character {
     private String description;
 
     @Column
-    private String photo;
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] photo;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "character_events", joinColumns = {
@@ -51,7 +53,7 @@ public class Character {
         this.description = description;
     }
 
-    public Character(User user, String name, String description, String photo) {
+    public Character(User user, String name, String description, byte[] photo) {
         this.user = user;
         this.name = name;
         this.description = description;
@@ -98,11 +100,11 @@ public class Character {
         this.events = events;
     }
 
-    public String getPhoto() {
+    public byte[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 }
