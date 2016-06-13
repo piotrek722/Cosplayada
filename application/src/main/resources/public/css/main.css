@@ -1,9 +1,19 @@
 body{
-   background-color: #303030;
    color: whitesmoke;
+   background: #303030 url("http://grozav.com/plugins/bootslider/img/slide-3.jpg");
+   width: 100%;
+   height: 100%;
 }
 
 input{
    color:black;
    display: block;
+}
+
+.nav {
+   background-color: #131619; /* 171B1C  161D24*/
+}
+
+.btn-inverse{
+   color: black;
 }
