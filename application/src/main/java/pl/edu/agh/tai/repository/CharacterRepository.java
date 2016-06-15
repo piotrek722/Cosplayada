@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.edu.agh.tai.model.Character;
 import pl.edu.agh.tai.model.User;
 
+import java.sql.Blob;
 import java.util.List;
 
 

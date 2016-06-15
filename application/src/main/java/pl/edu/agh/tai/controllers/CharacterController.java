@@ -24,20 +24,13 @@ public class CharacterController {
         try {
             User user = userRepository.findByNickname(characterInfo.getUser());
             if (user != null) {
-                File file = new File(characterInfo.getPhoto());
-                FileInputStream inputStream = new FileInputStream(file);
-                byte[] image = StreamUtils.copyToByteArray(inputStream);
-                Character character = new Character(user, characterInfo.getName(), characterInfo.getDescription(), image);
+                Character character = new Character(user, characterInfo.getName(), characterInfo.getDescription(),characterInfo.getPhoto());
                 System.out.println("Adding character to user: " + user.getNickname());
                 characterRepository.save(character);
             } else {
                 System.out.println("cannot find user " + characterInfo.getUser());
             }
 
-        }
-        catch (FileNotFoundException e){
-            e.printStackTrace();
-            return false;
         }
         catch (Exception ex) {
             ex.printStackTrace();

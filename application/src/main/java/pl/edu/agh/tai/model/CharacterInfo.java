@@ -1,12 +1,11 @@
 package pl.edu.agh.tai.model;
 
-
 public class CharacterInfo {
 
     private String user;
     private String name;
     private String description;
-    private String photo;
+    private byte[] photo;
 
 
     public CharacterInfo() {
@@ -18,7 +17,7 @@ public class CharacterInfo {
         this.description = description;
     }
 
-    public CharacterInfo(String user, String name, String description, String photo) {
+    public CharacterInfo(String user, String name, String description, byte[] photo) {
         this.user = user;
         this.name = name;
         this.description = description;
@@ -49,11 +48,11 @@ public class CharacterInfo {
         this.description = description;
     }
 
-    public String getPhoto() {
+    public byte[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 }
