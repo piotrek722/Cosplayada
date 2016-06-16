@@ -6,9 +6,9 @@
 
     <div>
 
-        <select ng-model="currentCharacter" ng-options="x.name for x in characters" ng-change="setCharacter(x.id)">
+        <select ng-model="controller.currentCharacter" ng-options="x.name for x in characters" ng-change="setCharacter(x.id)">
         </select>
-        Selected is: {{currentCharacter}}
+        Selected is: {{controller.currentCharacter.name}}
 
     </div>
 
