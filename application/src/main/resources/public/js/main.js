@@ -88,7 +88,7 @@ app.controller('navigation', function($rootScope, $http, $location, $route, Toke
                         $rootScope.username = self.credentials.username;
                         TokenFactory.setValue(self.credentials.username + ":" + self.credentials.password);
                     }else{
-                        self.error = true; // todo show be msg about error
+                        self.error = "Login failed. Please try again.";
                         $rootScope.authenticated = false;
                     }
 
