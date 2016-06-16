@@ -1,7 +1,7 @@
 
 <div class="container">
     <div class="alert alert-danger" ng-show="controller.error">
-        There was a problem logging in. Please try again.
+        {{controller.error}}
     </div>
     <form role="form" class="col-lg-4 col-md-4 col-sm-4 col-xs-8 col-lg-offset-4 col-md-offset-4" ng-submit="controller.login()">
     <div class="form-group">

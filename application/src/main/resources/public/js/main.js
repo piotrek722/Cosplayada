@@ -95,7 +95,7 @@ app.controller('navigation', function($rootScope, $http, $location, $route, Toke
                 },
                 function(response){
                     console.log("Login failed");
-                    self.error = true;
+                    self.error = "Login failed. Please try again.";
                     $rootScope.authenticated = false;
 
                 }
@@ -105,7 +105,6 @@ app.controller('navigation', function($rootScope, $http, $location, $route, Toke
     };
 
     self.logout = function() {
-        console.log("trying to log out");
         $http.post('logout', {}).finally(function() {
             $rootScope.authenticated = false;
             console.log("Logout succeeded");
