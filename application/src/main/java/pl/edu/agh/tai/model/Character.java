@@ -27,7 +27,7 @@ public class Character {
     private String description;
 
     @Column
-    @Basic(fetch = FetchType.LAZY)
+    @Lob
     private byte[] photo;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

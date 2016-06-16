@@ -132,14 +132,21 @@ app.controller('signup', function($rootScope, $http, $location, $route) {
         if (self.credentials.repeat_password == self.credentials.password) {
 
             $rootScope.checked = true;
-            console.log("passwords match");
             $http.post("/user/add", user)
                 .then(function (response) {
-                    $location.path("/login");
-                    console.log("User " + user.username + " successfully added");
+                    console.log(response.data);
+                    if (!response.data.status) {
+                        self.error = response.data.message;
+                    }
+                    else {
+                        $location.path("/login");
+                        console.log("User " + user.username + " successfully added");
+                    }
+
                 },
                 function(response){
-                    self.error = "Signup Failed";  // todo check response status
+                    self.error = response.data.message;
+                    console.log(response.data);
                 });
 
         } else {
