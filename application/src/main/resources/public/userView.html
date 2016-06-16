@@ -61,9 +61,10 @@
         <p>Here are characters you added:</p>
         <div class="row">
             <div class="col-lg-3" ng-repeat="x in characters">
-                <a ng-href="#/mycharacters/{{x.id}}" class="thumbnail">
+                <a ng-href="#/mycharacters/{{x.id}}" >
                     <p>{{ x.name }}</p>
-                    <img src="{{x.photo}}" style="width:200px;height:300px">
+                    <img ng-src="data:image/JPEG;base64,{{x.photo}}" class="img-responsive empImg" id="empImage" style="width:200px;height:300px">
+                    <!--<img class="img-responsive empImg" id="empImage" data-ng-src="'data:image/jpg;base64,'+{{x.photo}}" style="width:200px;height:300px" />-->
                 </a>
             </div>
         </div>
@@ -91,15 +92,16 @@
 
     <div class="container">
     <h3>Add new character</h3>
-        <form role="form" class="col-lg-3 col-md-3 col-sm-4 col-xs-8" ng-submit="controller.addCharacter()">
+            <form role="form" class="col-lg-3 col-md-3 col-sm-4 col-xs-8" ng-submit="controller.addCharacter()">
             <div class="form-group">
                 <label for="name">Character name</label>
                 <input type="text" class="form-control" id="name" name="name" ng-model="controller.character.name"/>
                 <label for="description">Description</label>
                 <input type="text" class="form-control" id="description" name="description" ng-model="controller.character.description"/>
                 <label for="photo">Photo</label>
-                <input type="text" class="form-control" id="photo" name="photo" ng-model="controller.character.photo"/>
-
+                <br>
+                <img id="photoView" src="#" alt="" style="width:200px;height:300px" />
+                <input type="file" class="file" onchange="angular.element(this).scope().uploadFile(this)"  id="photo" name="photo" ng-model="controller.character.photo"/>
             </div>
             <button type="submit" class="btn btn-primary">Add</button>
         </form>
