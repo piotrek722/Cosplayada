@@ -1,8 +1,10 @@
 body{
    color: whitesmoke;
-   background: #303030 url("http://grozav.com/plugins/bootslider/img/slide-3.jpg");
-   width: 100%;
-   height: 100%;
+   background: url("http://grozav.com/plugins/bootslider/img/slide-3.jpg") no-repeat fixed center center;
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
+   background-size: cover;
 }
 
 input{
@@ -15,5 +17,10 @@ input{
 }
 
 .btn-inverse{
-   color: black;
+   background-color: #131619;
+}
+
+.input-group-addon{
+   background-color: #131619;
+   border: 0;
 }
