@@ -1,14 +1,10 @@
-<p>Event id is: {{controller.event_info.id}}</p>
-<p>Event name is: {{controller.event_info.name}}</p>
-
-
 <form role="form" ng-submit="controller.joinEvent()">
 
     <div>
 
         <select ng-model="controller.currentCharacter" ng-options="x.name for x in characters" ng-change="setCharacter(x.id)">
         </select>
-        Selected is: {{controller.currentCharacter.name}}
+        You are joining even as: {{controller.currentCharacter.name}}
 
     </div>
 

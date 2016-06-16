@@ -50,12 +50,11 @@ public class EventController {
     public Boolean joinEvent(@PathVariable long id, @PathVariable long characterId) {
         System.out.println("Joining for: " + id + " character " + characterId);
         Event event = eventRepository.findById(id);
-        //User user = userRepository.findByNickname(username);
         Character character = characterRepository.findOne(characterId);
         if (event != null && character != null) {
             event.getCharacterSet().add(character);
             character.getEvents().add(event);
-           // userRepository.save(user);
+
             characterRepository.save(character);
             System.out.println("Joined user to " + event.getName());
             return true;
