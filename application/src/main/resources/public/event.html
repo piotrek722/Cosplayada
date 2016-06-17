@@ -1,12 +1,35 @@
-<form role="form" ng-submit="controller.joinEvent()">
-
-    <div>
-
-        <select ng-model="controller.currentCharacter" ng-options="x.name for x in characters" ng-change="setCharacter(x.id)">
-        </select>
-        You are joining even as: {{controller.currentCharacter.name}}
-
+<div class="container" ng-controller="event_controller">
+    <div class="col-lg-12 col-md-12">
+        <h1>{{controller.event.name}}</h1>
     </div>
 
-    <button type="submit" class="btn btn-primary">Join</button>
-</form>
+    <div class="col-lg-4 col-md-4">
+        <br/>
+        <p><img src="http://cdn2.hubspot.net/hub/55403/file-1816007428-jpg/Event.jpg?t=1429810618081" width="200px" height="270px"></p>
+    </div>
+    <div class="col-lg-6 col-md-6">
+        <br/>
+        <h3>City: {{controller.event.city}}</h3>
+        <h3>Date: {{controller.event.date}}</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, alias amet blanditiis commodi consectetur dolores, eum harum hic incidunt ipsam libero minus possimus quibusdam quisquam quod saepe sed similique suscipit.</p>
+    </div>
+
+    <br/>
+
+    <div class="col-lg-12 col-md-12">
+        <form role="form" ng-submit="controller.joinEvent()">
+            <br/>
+            <div>
+
+                <select ng-model="controller.currentCharacter" ng-options="x.name for x in characters" ng-change="setCharacter(x.id)">
+                </select>
+                You are joining even as: {{controller.currentCharacter.name}}
+
+            </div>
+            <br/>
+            <button type="submit" class="btn btn-primary">Join</button>
+        </form>
+    </div>
+
+</div>
+
