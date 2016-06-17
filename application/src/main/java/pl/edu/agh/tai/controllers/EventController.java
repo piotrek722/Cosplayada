@@ -2,15 +2,14 @@ package pl.edu.agh.tai.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pl.edu.agh.tai.model.*;
 import pl.edu.agh.tai.model.Character;
-import pl.edu.agh.tai.model.Event;
-import pl.edu.agh.tai.model.User;
 import pl.edu.agh.tai.repository.CharacterRepository;
 import pl.edu.agh.tai.repository.EventRepository;
-import pl.edu.agh.tai.model.EventInfo;
 import pl.edu.agh.tai.repository.UserRepository;
 
 import java.util.HashSet;
+import java.util.List;
 
 
 @RestController
@@ -47,19 +46,27 @@ public class EventController {
     }
 
     @RequestMapping(value = "/events/{id}/join/{characterId}")
-    public Boolean joinEvent(@PathVariable long id, @PathVariable long characterId) {
+    public Response joinEvent(@PathVariable long id, @PathVariable long characterId) {
         System.out.println("Joining for: " + id + " character " + characterId);
         Event event = eventRepository.findById(id);
         Character character = characterRepository.findOne(characterId);
         if (event != null && character != null) {
+
+            List<Character> characterList = characterRepository.findByUser(character.getUser());    //lista characterow usera
+            for (Character findCharacter : characterList) {
+                if (event.getCharacterSet().contains(findCharacter)) {
+                    return new Response(false, "You already joined this event with diffrent chatacter");
+                }
+            }
+
             event.getCharacterSet().add(character);
             character.getEvents().add(event);
 
             characterRepository.save(character);
             System.out.println("Joined user to " + event.getName());
-            return true;
+            return new Response(true, null);
         }
-        return false;
+        return new Response(false, "Error");
     }
 
     @Autowired

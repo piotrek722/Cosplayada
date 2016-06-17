@@ -64,7 +64,8 @@ app.controller('add_events_controller', function($rootScope, $http, $location, $
 app.controller('event_controller', function($http, $routeParams, $rootScope, $location, TokenFactory) {
 
     var self = this;
-
+    self.error = false;
+     
     var config = {
         headers:{
             "AUTH_TOKEN" : TokenFactory.getValue(),
@@ -75,24 +76,19 @@ app.controller('event_controller', function($http, $routeParams, $rootScope, $lo
     self.currentCharacter = {};
 
     self.event = {};
+    
+    $http.get('/events/' + $routeParams.id, config)
+        .then( function(response) {
+            console.log(response.data);
+            self.event.name = response.data.name;
+            self.event.city = response.data.city;
+            console.log(self.event);
+        }, function onError (response) {
+            console.log("Error in joining event");
+            console.log(response.data);
 
- //   self.getEvent = function () {
-        $http.get('/events/' + $routeParams.id, config)
-            .then( function(response) {
-                console.log(response.data);
-                self.event.name = response.data.name;
-                self.event.city = response.data.city;
-                console.log(self.event);
-            }, function onError (response) {
-                console.log("Error in joining event");
-                console.log(response.data);
-
-            });
-
-//        );
-//    };
-
-//    getEvent();
+        });
+    
 
     self.joinEvent = function () {
 
@@ -101,8 +97,13 @@ app.controller('event_controller', function($http, $routeParams, $rootScope, $lo
         $http.post('events/' + $routeParams.id + '/join/' +self.currentCharacter.id, {}, config)
             .then( function (response) {
                 console.log("Response from joining");
-                console.log(response.data);
-                $location.path("/events");
+                if (response.data.status) {
+                    console.log(response.data);
+                    $location.path("/events");
+                } else {
+                    self.error = response.data.message;
+                    console.log(response.data);
+                }
             }, function onError (response) {
                 console.log("Error in joining event");
                 console.log(response.data);
