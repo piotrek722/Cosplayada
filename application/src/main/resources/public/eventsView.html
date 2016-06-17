@@ -1,20 +1,31 @@
 <div ng-app="main" ng-controller="events_controller">
 
     <div class="container">
-        <h2>Events</h2>
+        <div class="col-lg-12">
+            <h2>Events</h2>
+        </div>
 
         <div class="row">
             <div class="col-lg-6" ng-repeat="x in eventsArray">
                 <a ng-href="#/events/{{x.id}}" >
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <p>{{ x.name }}</p>
-                        <img src="http://cdn2.hubspot.net/hub/55403/file-1816007428-jpg/Event.jpg?t=1429810618081" style="width:200px;height:300px">
+                    </div>
+
+                    <div class="col-lg-6">
+                        <img src="http://cdn2.hubspot.net/hub/55403/file-1816007428-jpg/Event.jpg?t=1429810618081" style="width:250px;height:300px">
                     </div>
                     <div class="col-lg-6">
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad assumenda blanditiis consequatur cupiditate dignissimos distinctio dolor dolores dolorum eos eum, laudantium numquam quis quod repudiandae saepe unde voluptatum! Esse?   </p>
                     </div>
                 </a>
             </div>
+        </div>
+
+        </br>
+        </br>
+        <div class="col-lg-12">
+            <a href="#/events/add" class="btn btn-primary" role="button">Add Event</a>
         </div>
 
         <!--<table class="table">-->
@@ -35,6 +46,5 @@
         <!--</table>-->
     </div>
 
-    <a href="#/events/add" class="btn btn-primary" role="button">Add Event</a>
 
 </div>
