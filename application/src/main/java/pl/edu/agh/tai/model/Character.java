@@ -3,7 +3,6 @@ package pl.edu.agh.tai.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-import java.sql.Blob;
 import java.util.Set;
 
 @Entity

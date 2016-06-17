@@ -1,111 +1,132 @@
-<div ng-app="main" ng-controller="user_controller">
+<div ng-controller="user_controller">
 
-    <div class="container">
-        <div class="row">
-            <h1>Your profile</h1>
-        </div>
-        <div class="col-lg-3">
-            <br/>
-            <p><img src="https://tracker.moodle.org/secure/attachment/30912/f3.png" width="200px" height="270px"></p>
-        </div>
-        <div class="col-lg-5">
-            <br/>
-            <p>Id is: {{controller.user_info.userId}}</p>
-            <p>Username is: {{controller.user_info.nickname}}</p>
-        </div>
-        <div class="col-lg-4"></div>
-
-        <br/>
+    <div class="row">
+        <h1 class="display-4 col-lg-12 col-md-12">{{controller.user_info.nickname}}</h1>
     </div>
 
-    <!--<div class="container">-->
-        <!--<h2>Characters</h2>-->
-        <!--<p>Here are characters you added:</p>-->
-        <!--<div class="row">-->
-            <!--<div class="col-lg-3">-->
-                <!--<a href="#/" class="thumbnail">-->
-                    <!--<p>Gandalf</p>-->
-                    <!--<img src="http://vignette2.wikia.nocookie.net/lotr/images/e/e7/Gandalf_the_Grey.jpg/revision/latest?cb=20121110131754" style="width:200px;height:300px">-->
-                <!--</a>-->
-            <!--</div>-->
-            <!--<div class="col-lg-3">-->
-                <!--<a href="#/" class="thumbnail">-->
-                    <!--<p>Batman</p>-->
-                    <!--<img src="http://orig01.deviantart.net/4689/f/2015/131/c/a/ben_affleck_as_batman_by_luisbury_zine_net-d8t28en.jpg" style="width:200px;height:300px">-->
-                <!--</a>-->
-            <!--</div>-->
-            <!--<div class="col-lg-3">-->
-                <!--<a href="#/" class="thumbnail">-->
-                    <!--<p>Shrek</p>-->
-                    <!--<img src="https://upload.wikimedia.org/wikipedia/en/7/73/Shrekcharacter.jpg" style="width:200px;height:300px">-->
-                <!--</a>-->
-            <!--</div>-->
-            <!--<div class="col-lg-3">-->
-                <!--<a href="#/" class="thumbnail">-->
-                    <!--<p>Minionek</p>-->
-                    <!--<img src="http://pu.i.wp.pl/bloog/98142508/55325436/1376633_635448896486_W4_big.jpg" style="width:200px;height:300px">-->
-                <!--</a>-->
-            <!--</div>-->
-            <!--<div class="col-lg-3">-->
-                <!--<a href="#/" class="thumbnail">-->
-                    <!--<p>Ork</p>-->
-                    <!--<img src="http://1.fwcdn.pl/an/867323/69755.12.jpg" style="width:200px;height:300px">-->
-                <!--</a>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
+    <div class="row">
+        <div class="col-lg-3 col-md-3">
+            <img class="img-responsive img-rounded" alt="portrait" src="https://tracker.moodle.org/secure/attachment/30912/f3.png">
+        </div>
+        <div class="col-lg-9 col-md-9">
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.Amet blanditiis dolorem et eum facere, id illum in incidunt ipsa iure molestiae odit quidem quo recusandae reprehenderit sint sit vero voluptas.
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.Amet blanditiis dolorem et eum facere, id illum in incidunt ipsa iure molestiae odit quidem quo recusandae reprehenderit sint sit vero voluptas.
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.Amet blanditiis dolorem et eum facere, id illum in incidunt ipsa iure molestiae odit quidem quo recusandae reprehenderit sint sit vero voluptas.
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.Amet blanditiis dolorem et eum facere, id illum in incidunt ipsa iure molestiae odit quidem quo recusandae reprehenderit sint sit vero voluptas.
+            </p>
+        </div>
+    </div>
+    <br>
 
+    <div class="row" ng-show="characters.length > 0">
+        <h2 class="col-lg-12 col-md-12">Characters</h2>
+    </div>
 
-    <div class="container">
-        <h2>Characters</h2>
-        <p>Here are characters you added:</p>
-        <div class="row">
-            <div class="col-lg-3" ng-repeat="x in characters">
-                <a ng-href="#/mycharacters/{{x.id}}" >
-                    <p>{{ x.name }}</p>
-                    <img ng-src="data:image/JPEG;base64,{{x.photo}}" class="img-responsive empImg" id="empImage" style="width:200px;height:300px">
-                    <!--<img class="img-responsive empImg" id="empImage" data-ng-src="'data:image/jpg;base64,'+{{x.photo}}" style="width:200px;height:300px" />-->
-                </a>
+    <div class="row">
+        <div class="col-lg-3 col-md-3" ng-repeat="x in characters">
+            <br>
+            <div class="hovereffect">
+                <img ng-src="data:image/JPEG;base64,{{x.photo}}" class="img-responsive empImg " id="empImage" style="width:350px;height:200px">
+                <div class="overlay">
+                    <h2>{{ x.name }}</h2>
+                    <a class="info" href="#/mycharacters/{{x.id}}">See Character</a>
+                </div>
             </div>
         </div>
     </div>
+    <br>
 
-    <!--<div class="container">-->
-        <!--<h2>Characters</h2>-->
-        <!--<table class="table">-->
-            <!--<thead>-->
-            <!--<tr>-->
-                <!--<th>#</th>-->
-                <!--<th>Name</th>-->
-                <!--<th>Description</th>-->
-            <!--</tr>-->
-            <!--</thead>-->
-            <!--<tbody>-->
-            <!--<tr ng-repeat="x in characters">-->
-                <!--<td>{{ x.id }}</td>-->
-                <!--<td><a ng-href="#/mycharacters/{{x.id}}">{{ x.name }}</a></td>-->
-                <!--<td> {{ x.description }} </td>-->
-            <!--</tr>-->
-            <!--</tbody>-->
-        <!--</table>-->
+    <!--<div class="row">-->
+        <!--<h3 class="col-lg-12 col-md-12">Add new character</h3>-->
     <!--</div>-->
 
-    <div class="container">
-    <h3>Add new character</h3>
-            <form role="form" class="col-lg-3 col-md-3 col-sm-4 col-xs-8" ng-submit="controller.addCharacter()">
+    <div class="row">
+        <form role="form" class="col-lg-3 col-md-4 col-sm-4 col-xs-8" ng-submit="controller.addCharacter()">
             <div class="form-group">
                 <label for="name">Character name</label>
-                <input type="text" class="form-control" id="name" name="name" ng-model="controller.character.name"/>
-                <label for="description">Description</label>
-                <input type="text" class="form-control" id="description" name="description" ng-model="controller.character.description"/>
-                <label for="photo">Photo</label>
-                <br>
-                <img id="photoView" src="#" alt="" style="width:200px;height:300px" />
-                <input type="file" class="file" onchange="angular.element(this).scope().uploadFile(this)"  id="photo" name="photo" ng-model="controller.character.photo"/>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                    <input type="text" class="form-control" id="name" name="name" ng-model="controller.character.name"/>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary">Add</button>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-book fa-fw"></i></span>
+                    <input type="text" class="form-control" id="description" name="description" ng-model="controller.character.description"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <!--ng-show="photoViewCondition"-->
+                <label for="photo" class="btn btn-inverse" >Upload Photo <i class="fa fa-picture-o fa-fw"></i></label>
+                <input type="file" onchange="angular.element(this).scope().uploadFile(this);"
+                       id="photo" name="photo" ng-model="controller.character.photo" accept="image/jpeg" style="display:none;"/>
+                <button type="submit" class="btn btn-inverse pull-right">Add Character</button>
+            </div>
         </form>
     </div>
 
-
 </div>
+
+
+
+
+
+<!--<div class="container">-->
+<!--<h2>Characters</h2>-->
+<!--<p>Here are characters you added:</p>-->
+<!--<div class="row">-->
+<!--<div class="col-lg-3">-->
+<!--<a href="#/" class="thumbnail">-->
+<!--<p>Gandalf</p>-->
+<!--<img src="http://vignette2.wikia.nocookie.net/lotr/images/e/e7/Gandalf_the_Grey.jpg/revision/latest?cb=20121110131754" style="width:200px;height:300px">-->
+<!--</a>-->
+<!--</div>-->
+<!--<div class="col-lg-3">-->
+<!--<a href="#/" class="thumbnail">-->
+<!--<p>Batman</p>-->
+<!--<img src="http://orig01.deviantart.net/4689/f/2015/131/c/a/ben_affleck_as_batman_by_luisbury_zine_net-d8t28en.jpg" style="width:200px;height:300px">-->
+<!--</a>-->
+<!--</div>-->
+<!--<div class="col-lg-3">-->
+<!--<a href="#/" class="thumbnail">-->
+<!--<p>Shrek</p>-->
+<!--<img src="https://upload.wikimedia.org/wikipedia/en/7/73/Shrekcharacter.jpg" style="width:200px;height:300px">-->
+<!--</a>-->
+<!--</div>-->
+<!--<div class="col-lg-3">-->
+<!--<a href="#/" class="thumbnail">-->
+<!--<p>Minionek</p>-->
+<!--<img src="http://pu.i.wp.pl/bloog/98142508/55325436/1376633_635448896486_W4_big.jpg" style="width:200px;height:300px">-->
+<!--</a>-->
+<!--</div>-->
+<!--<div class="col-lg-3">-->
+<!--<a href="#/" class="thumbnail">-->
+<!--<p>Ork</p>-->
+<!--<img src="http://1.fwcdn.pl/an/867323/69755.12.jpg" style="width:200px;height:300px">-->
+<!--</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<div class="container">-->
+<!--<h2>Characters</h2>-->
+<!--<table class="table">-->
+<!--<thead>-->
+<!--<tr>-->
+<!--<th>#</th>-->
+<!--<th>Name</th>-->
+<!--<th>Description</th>-->
+<!--</tr>-->
+<!--</thead>-->
+<!--<tbody>-->
+<!--<tr ng-repeat="x in characters">-->
+<!--<td>{{ x.id }}</td>-->
+<!--<td><a ng-href="#/mycharacters/{{x.id}}">{{ x.name }}</a></td>-->
+<!--<td> {{ x.description }} </td>-->
+<!--</tr>-->
+<!--</tbody>-->
+<!--</table>-->
+<!--</div>-->

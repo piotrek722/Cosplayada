@@ -18,7 +18,7 @@ app.controller('user_controller', function($rootScope, $http, $location, $route,
             nickname : response.data.nickname
         };
         console.log(self.user_info);
-        console.log(response.data);
+        //console.log(response.data);
     });
 
     self.character = {};
@@ -47,19 +47,19 @@ app.controller('user_controller', function($rootScope, $http, $location, $route,
         check_character(self.character, function(checkedCh) {
             if (checkedCh) {
                 console.log("added new character");
+                self.photoViewCondition = false;
                 $location.path("/");
             } else {
                 console.log("error adding character");
             }
         });
     };
+
     $rootScope.uploadFile = function (input){
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
 
-                //Sets the Old Image to new New Image
-                $('#photoView').attr('src', e.target.result);
                 //Create a canvas and draw image on Client Side to get the byte[] equivalent
                 var canvas = document.createElement("canvas");
                 var imageElement = document.createElement("img");
@@ -73,10 +73,9 @@ app.controller('user_controller', function($rootScope, $http, $location, $route,
 
 //                 //Removes the Data Type Prefix
 //                 //And set the view model to the new value
-               self.character.photo = base64Image.replace(/data:image\/jpeg;base64,/g, '');
+                self.character.photo = base64Image.replace(/data:image\/jpeg;base64,/g, '');
                 $rootScope.tmpImage = base64Image.replace(/data:image\/jpeg;base64,/g, '');
             }
-
             reader.readAsDataURL(input.files[0]);
         }
     };
