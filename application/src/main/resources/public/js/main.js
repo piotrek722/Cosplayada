@@ -39,6 +39,10 @@ app.config(function($routeProvider, $httpProvider) {
         templateUrl: 'character.html',
         controller: 'character_controller',
         controllerAs: 'controller'
+    }).when('/updateUser', {
+        templateUrl: 'updateUser.html',
+        controller: 'updateUser_controller',
+        controllerAs: 'controller'
     }).otherwise('/');
 
     //$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

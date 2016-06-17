@@ -23,6 +23,10 @@ public class User {
     @Column
     private String role;
 
+    @Column
+    @Lob
+    private byte[] photo;
+
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @JsonManagedReference
@@ -99,4 +103,8 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public byte[] getPhoto() { return photo; }
+
+    public void setPhoto(byte[] photo) { this.photo = photo; }
 }
