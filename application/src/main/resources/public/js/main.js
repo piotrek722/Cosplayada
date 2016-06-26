@@ -35,7 +35,7 @@ app.config(function($routeProvider, $httpProvider) {
         templateUrl: 'userView.html',
         controller: 'user_controller',
         controllerAs: 'controller'
-    }).when('/mycharacters/:id', {
+    }).when('/characters/:id', {
         templateUrl: 'character.html',
         controller: 'character_controller',
         controllerAs: 'controller'
