@@ -76,12 +76,15 @@ app.controller('event_controller', function($http, $routeParams, $rootScope, $lo
     self.currentCharacter = {};
 
     self.event = {};
+
+    $rootScope.characterSet = {};
     
     $http.get('/events/' + $routeParams.id, config)
         .then( function(response) {
             console.log(response.data);
             self.event.name = response.data.name;
             self.event.city = response.data.city;
+            $rootScope.characterSet = response.data.characterSet;
             console.log(self.event);
         }, function onError (response) {
             console.log("Error in joining event");

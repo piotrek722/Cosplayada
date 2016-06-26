@@ -69,6 +69,15 @@ public class EventController {
         return new Response(false, "Error");
     }
 
+    @RequestMapping(value = "/events/{id}/characters")
+    public Iterable<Character> showParticipants(@PathVariable long id) {
+        Event event = eventRepository.findById(id);
+        if (event != null) {
+            return event.getCharacterSet();
+        }
+        return null;
+    }
+
     @Autowired
     private EventRepository eventRepository;
 

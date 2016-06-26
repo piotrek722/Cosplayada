@@ -10,7 +10,13 @@ app.controller('character_controller', function($rootScope, $http, $location, $r
     };
 
     console.log('showing character');
-    $http.get('/users/' + $rootScope.username + '/characters/' + $routeParams.id, config).then(function (response) {
+    // $http.get('/users/' + $rootScope.username + '/characters/' + $routeParams.id, config).then(function (response) {
+    //     console.log("Got character details");
+    //
+    //     self.character = response.data ;
+    // });
+
+    $http.get('/characters/' + $routeParams.id, config).then(function (response) {
         console.log("Got character details");
 
         self.character = response.data ;
