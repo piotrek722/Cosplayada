@@ -1,8 +1,11 @@
-<div ng-controller="updateUser_controller">
+<div class="container" ng-controller="updateUser_controller">
     <div class="row">
         <form role="form" class="col-lg-3 col-md-4 col-sm-4 col-xs-8" ng-submit="controller.updateUser()">
             <div class="form-group">
                 <!--ng-show="photoViewCondition"-->
+                <img id="photoView" src="#" alt="" style="width:200px;height:300px" />
+                <br>
+                <br>
                 <label for="photo" class="btn btn-inverse" >Upload Photo <i class="fa fa-picture-o fa-fw"></i></label>
                 <input type="file" onchange="angular.element(this).scope().uploadFile(this);"
                        id="photo" name="photo" ng-model="controller.user.photo" accept="image/jpeg" style="display:none;"/>
