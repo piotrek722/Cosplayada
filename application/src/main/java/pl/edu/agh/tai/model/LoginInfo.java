@@ -6,6 +6,8 @@ public class LoginInfo {
     private String username;
     private String password;
     private String role;
+    private String description;
+    private byte[] photo;
 
     public LoginInfo() {
     }
@@ -39,4 +41,13 @@ public class LoginInfo {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public byte[] getPhoto() { return photo; }
+
+    public void setPhoto(byte[] photo) { this.photo = photo; }
+
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) { this.description = description; }
 }
+
