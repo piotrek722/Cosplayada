@@ -17,7 +17,7 @@ app.controller('user_controller', function($rootScope, $http, $location, $route,
             userId : response.data.id,
             nickname : response.data.nickname,
             photo : response.data.photo,
-            characters : response.data.characters
+            description : response.data.description
         };
         console.log(self.user_info);
         //console.log(response.data);

@@ -196,7 +196,6 @@ app.controller('updateUser_controller', function($rootScope, $http, $location, $
 
         $rootScope.checkedCh = true;
         self.user.username = $rootScope.username;
-        
         $http.post('/user/update', self.user, config).then(function(response) {
             console.log("Update character");
             console.log(response.data);
