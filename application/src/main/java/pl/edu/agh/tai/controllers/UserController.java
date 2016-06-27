@@ -51,8 +51,16 @@ public class UserController {
 
     @RequestMapping(value = "/users/{name}")
     public User getUserId(@PathVariable String name) {
-        System.out.println("Getting user profile" + name);
+        System.out.println("Getting user profile " + name);
         return userRepository.findByNickname(name);
+    }
+
+    @RequestMapping(value = "/user/update",method = RequestMethod.POST  )
+    public Response updateUser(@RequestBody LoginInfo userinfo) {
+        User user = userRepository.findByNickname(userinfo.getUsername());
+        user.setPhoto(userinfo.getPhoto());
+        userRepository.save(user);
+        return new Response(true, null);
     }
 
     @Autowired
