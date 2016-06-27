@@ -29,7 +29,6 @@ public class EventController {
     public Boolean addEvent(@RequestBody EventInfo eventInfo) {
 
         System.out.println(eventInfo.getName());
-        System.out.println("DATE : " + eventInfo.getDate());
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm a");
@@ -39,6 +38,7 @@ public class EventController {
                     eventInfo.getCity(),
                     eventInfo.getAddress(),
                     timeFormat.format(eventInfo.getTime()));
+            Event event = new Event(eventInfo.getName(), eventInfo.getCity(),eventInfo.getPhoto());
             System.out.println("Event created with name: " + eventInfo.getName());
             eventRepository.save(event);
         }

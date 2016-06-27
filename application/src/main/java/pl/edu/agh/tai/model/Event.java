@@ -30,6 +30,10 @@ public class Event {
     @Column
     private String time;
 
+    @Column
+    @Lob
+    private byte[] photo;
+
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "events")
     @JsonManagedReference
     private Set<Character> characterSet;
@@ -43,9 +47,10 @@ public class Event {
         characterSet = new HashSet<>();
     }
 
-    public Event(String name, String city) {
+    public Event(String name, String city, byte[] photo) {
         this.name = name;
         this.city = city;
+        this.photo = photo;
         characterSet = new HashSet<>();
     }
 
@@ -56,12 +61,13 @@ public class Event {
         characterSet = new HashSet<>();
     }
 
-    public Event(String name, String date, String city, String address, String time) {
+    public Event(String name, String date, String city, String address, String time, byte[] photo) {
         this.name = name;
         this.date = date;
         this.city = city;
         this.address = address;
         this.time = time;
+        this.photo = photo;
         this.characterSet = new HashSet<>();
     }
 
@@ -117,4 +123,8 @@ public class Event {
     public String toString() {
         return id + ": " + name;
     }
+
+    public byte[] getPhoto() { return photo; }
+
+    public void setPhoto(byte[] photo) { this.photo = photo; }
 }
