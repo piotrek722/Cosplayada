@@ -3,7 +3,6 @@ package pl.edu.agh.tai.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,13 +19,16 @@ public class Event {
     private String name;
 
     @Column
-    private Date date;
+    private String date;
 
     @Column
     private String city;
 
     @Column
     private String address;
+
+    @Column
+    private String time;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "events")
     @JsonManagedReference
@@ -47,6 +49,22 @@ public class Event {
         characterSet = new HashSet<>();
     }
 
+    public Event(String name, String date, String city) {
+        this.name = name;
+        this.date = date;
+        this.city = city;
+        characterSet = new HashSet<>();
+    }
+
+    public Event(String name, String date, String city, String address, String time) {
+        this.name = name;
+        this.date = date;
+        this.city = city;
+        this.address = address;
+        this.time = time;
+        this.characterSet = new HashSet<>();
+    }
+
     public long getId() {
         return id;
     }
@@ -55,7 +73,7 @@ public class Event {
         return name;
     }
 
-    public Date getDate() {
+    public String  getDate() {
         return date;
     }
 
@@ -75,7 +93,7 @@ public class Event {
         this.name = name;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

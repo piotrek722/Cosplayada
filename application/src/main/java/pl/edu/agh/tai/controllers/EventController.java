@@ -2,13 +2,15 @@ package pl.edu.agh.tai.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.agh.tai.model.*;
 import pl.edu.agh.tai.model.Character;
+import pl.edu.agh.tai.model.Event;
+import pl.edu.agh.tai.model.EventInfo;
+import pl.edu.agh.tai.model.Response;
 import pl.edu.agh.tai.repository.CharacterRepository;
 import pl.edu.agh.tai.repository.EventRepository;
 import pl.edu.agh.tai.repository.UserRepository;
 
-import java.util.HashSet;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 
@@ -27,8 +29,16 @@ public class EventController {
     public Boolean addEvent(@RequestBody EventInfo eventInfo) {
 
         System.out.println(eventInfo.getName());
+        System.out.println("DATE : " + eventInfo.getDate());
         try {
-            Event event = new Event(eventInfo.getName(), eventInfo.getCity());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm a");
+            Event event = new Event(
+                    eventInfo.getName(),
+                    dateFormat.format(eventInfo.getDate()),
+                    eventInfo.getCity(),
+                    eventInfo.getAddress(),
+                    timeFormat.format(eventInfo.getTime()));
             System.out.println("Event created with name: " + eventInfo.getName());
             eventRepository.save(event);
         }

@@ -28,7 +28,10 @@ app.controller('add_events_controller', function($rootScope, $http, $location, $
 
         var event_info = {
             name : event.name,
-            city : event.city
+            date : event.date,
+            city : event.city,
+            address : event.address,
+            time: event.time
         };
         
         console.log(event_info);
@@ -48,7 +51,6 @@ app.controller('add_events_controller', function($rootScope, $http, $location, $
     };
 
     self.addEvent = function() {
-
 
         check_event(self.event, function(checked) {
             if (checked) {
@@ -83,6 +85,9 @@ app.controller('event_controller', function($http, $routeParams, $rootScope, $lo
         .then( function(response) {
             console.log(response.data);
             self.event.name = response.data.name;
+            self.event.date = response.data.date;
+            self.event.time = response.data.time;
+            self.event.address = response.data.address;
             self.event.city = response.data.city;
             $rootScope.characterSet = response.data.characterSet;
             console.log(self.event);

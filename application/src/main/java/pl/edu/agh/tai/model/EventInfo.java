@@ -8,6 +8,8 @@ public class EventInfo {
     private String name;
     private Date date;
     private String city;
+    private String address;
+    private Date time;
 
     public EventInfo() {
     }
@@ -19,6 +21,20 @@ public class EventInfo {
     public EventInfo(String name, String city) {
         this.name = name;
         this.city = city;
+    }
+
+    public EventInfo(String name, Date date, String city) {
+        this.name = name;
+        this.date = date;
+        this.city = city;
+    }
+
+    public EventInfo(String name, Date date, String city, String address, Date time) {
+        this.name = name;
+        this.date = date;
+        this.city = city;
+        this.address = address;
+        this.time = time;
     }
 
     public String getName() {
@@ -43,5 +59,13 @@ public class EventInfo {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public Date getTime(){
+        return time;
     }
 }
