@@ -8,6 +8,7 @@ public class EventInfo {
     private String name;
     private Date date;
     private String city;
+    private byte[] photo;
 
     public EventInfo() {
     }
@@ -16,9 +17,10 @@ public class EventInfo {
         this.name = name;
     }
 
-    public EventInfo(String name, String city) {
+    public EventInfo(String name, String city,byte[] photo) {
         this.name = name;
         this.city = city;
+        this.photo = photo;
     }
 
     public String getName() {
@@ -44,4 +46,8 @@ public class EventInfo {
     public void setCity(String city) {
         this.city = city;
     }
+
+    public byte[] getPhoto() { return photo; }
+
+    public void setPhoto(byte[] photo) { this.photo = photo; }
 }

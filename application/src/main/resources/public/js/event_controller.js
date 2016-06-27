@@ -28,7 +28,8 @@ app.controller('add_events_controller', function($rootScope, $http, $location, $
 
         var event_info = {
             name : event.name,
-            city : event.city
+            city : event.city,
+            photo : event.photo
         };
         
         console.log(event_info);
@@ -48,8 +49,7 @@ app.controller('add_events_controller', function($rootScope, $http, $location, $
     };
 
     self.addEvent = function() {
-
-
+        self.event.photo = $rootScope.tmpImage;
         check_event(self.event, function(checked) {
             if (checked) {
                 console.log("added new event");
@@ -59,6 +59,32 @@ app.controller('add_events_controller', function($rootScope, $http, $location, $
             }
         });
     }
+
+    $rootScope.uploadFile = function (input){
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+
+                $('#photoView').attr('src', e.target.result);
+                //Create a canvas and draw image on Client Side to get the byte[] equivalent
+                var canvas = document.createElement("canvas");
+                var imageElement = document.createElement("img");
+
+                imageElement.setAttribute('src', e.target.result);
+                canvas.width = imageElement.width;
+                canvas.height = imageElement.height;
+                var context = canvas.getContext("2d");
+                context.drawImage(imageElement, 0, 0);
+                var base64Image = canvas.toDataURL("image/jpeg");
+
+//                 //Removes the Data Type Prefix
+//                 //And set the view model to the new value
+                self.event.photo = base64Image.replace(/data:image\/jpeg;base64,/g, '');
+                $rootScope.tmpImage = base64Image.replace(/data:image\/jpeg;base64,/g, '');
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    };
 });
 
 app.controller('event_controller', function($http, $routeParams, $rootScope, $location, TokenFactory) {
@@ -82,6 +108,7 @@ app.controller('event_controller', function($http, $routeParams, $rootScope, $lo
             console.log(response.data);
             self.event.name = response.data.name;
             self.event.city = response.data.city;
+            self.event.photo = response.data.photo;
             console.log(self.event);
         }, function onError (response) {
             console.log("Error in joining event");

@@ -28,7 +28,7 @@ public class EventController {
 
         System.out.println(eventInfo.getName());
         try {
-            Event event = new Event(eventInfo.getName(), eventInfo.getCity());
+            Event event = new Event(eventInfo.getName(), eventInfo.getCity(),eventInfo.getPhoto());
             System.out.println("Event created with name: " + eventInfo.getName());
             eventRepository.save(event);
         }

@@ -7,6 +7,15 @@
             <input type="text" class="form-control" id="city" name="city" ng-model="controller.event.city"/>
         <!--<label for="date">Date</label>-->
             <!--<input type="date" class="form-control" id="date" name="date" ng-model="controller.event.date"/>-->
+        <br>
+        <br>
+        <img id="photoView" src="#" alt="" style="width:200px;height:300px" />
+        <br>
+        <br>
+        <label for="photo" class="btn btn-inverse" >Upload Photo <i class="fa fa-picture-o fa-fw"></i></label>
+        <input type="file" onchange="angular.element(this).scope().uploadFile(this);"
+               id="photo" name="photo" ng-model="controller.event.photo" accept="image/jpeg" style="display:none;"/>
+        <button type="submit" class="btn btn-inverse pull-right">Update</button>
     </div>
     <button type="submit" class="btn btn-primary">Add</button>
 </form>
