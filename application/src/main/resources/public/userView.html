@@ -6,17 +6,14 @@
     <div class="row">
         <div class="col-lg-3 col-md-3">
             <!--<img class="img-responsive img-rounded" alt="" src="{{controller.user_info.photo}}">-->
-            <img ng-    src="data:image/JPEG;base64,{{controller.user_info.photo}}" width="200px" height="270px">
+            <img  ng-src="data:image/JPEG;base64,{{controller.user_info.photo}}" alt="" width="200px" height="270px">
             <br>
             <br>
             <a href="#/updateUser" class="btn btn-inverse pull-left">Update</a>
         </div>
         <div class="col-lg-9 col-md-9">
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.Amet blanditiis dolorem et eum facere, id illum in incidunt ipsa iure molestiae odit quidem quo recusandae reprehenderit sint sit vero voluptas.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.Amet blanditiis dolorem et eum facere, id illum in incidunt ipsa iure molestiae odit quidem quo recusandae reprehenderit sint sit vero voluptas.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.Amet blanditiis dolorem et eum facere, id illum in incidunt ipsa iure molestiae odit quidem quo recusandae reprehenderit sint sit vero voluptas.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.Amet blanditiis dolorem et eum facere, id illum in incidunt ipsa iure molestiae odit quidem quo recusandae reprehenderit sint sit vero voluptas.
+            {{controller.user_info.description}}
             </p>
         </div>
     </div>

@@ -24,6 +24,9 @@ public class User {
     private String role;
 
     @Column
+    private String description;
+
+    @Column
     @Lob
     private byte[] photo;
 
@@ -107,4 +110,12 @@ public class User {
     public byte[] getPhoto() { return photo; }
 
     public void setPhoto(byte[] photo) { this.photo = photo; }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

@@ -58,7 +58,12 @@ public class UserController {
     @RequestMapping(value = "/user/update",method = RequestMethod.POST  )
     public Response updateUser(@RequestBody LoginInfo userinfo) {
         User user = userRepository.findByNickname(userinfo.getUsername());
-        user.setPhoto(userinfo.getPhoto());
+        if(userinfo.getPhoto() != null) {
+            user.setPhoto(userinfo.getPhoto());
+        }
+        if(userinfo.getDescription() != null) {
+            user.setDescription(userinfo.getDescription());
+        }
         userRepository.save(user);
         return new Response(true, null);
     }
