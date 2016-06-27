@@ -31,7 +31,8 @@ app.controller('add_events_controller', function($rootScope, $http, $location, $
             date : event.date,
             city : event.city,
             address : event.address,
-            time: event.time
+            time: event.time,
+            description : event.description,
             photo : event.photo
         };
         
@@ -117,9 +118,10 @@ app.controller('event_controller', function($http, $routeParams, $rootScope, $lo
             self.event.time = response.data.time;
             self.event.address = response.data.address;
             self.event.city = response.data.city;
-            self.event.photo = response.data.photo;
+            self.event.description = response.data.description;
             $rootScope.characterSet = response.data.characterSet;
-            console.log(self.event);
+            self.event.photo = response.data.photo;
+            console.log(Object.keys(response.data));
         }, function onError (response) {
             console.log("Error in joining event");
             console.log(response.data);

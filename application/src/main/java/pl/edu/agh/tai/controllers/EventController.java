@@ -37,8 +37,9 @@ public class EventController {
                     dateFormat.format(eventInfo.getDate()),
                     eventInfo.getCity(),
                     eventInfo.getAddress(),
-                    timeFormat.format(eventInfo.getTime()));
-            Event event = new Event(eventInfo.getName(), eventInfo.getCity(),eventInfo.getPhoto());
+                    timeFormat.format(eventInfo.getTime()),
+                    eventInfo.getDescription(),
+                    eventInfo.getPhoto());
             System.out.println("Event created with name: " + eventInfo.getName());
             eventRepository.save(event);
         }
@@ -51,7 +52,7 @@ public class EventController {
 
     @RequestMapping(value = "/events/{id}")
     public Event showEventWithId(@PathVariable long id) {
-        System.out.println("Event found: " + eventRepository.findById(id).getName());
+        System.out.println("Event found: " + eventRepository.findById(id));
         return eventRepository.findById(id);
     }
 

@@ -10,8 +10,8 @@
             <input type="date" class="form-control" id="date" name="date" ng-model="controller.event.date"/>
         <label for="time">Time</label>
             <input type="time" class="form-control" id="time" name="time" ng-model="controller.event.time"/>
-        <!--<label for="date">Date</label>-->
-            <!--<input type="date" class="form-control" id="date" name="date" ng-model="controller.event.date"/>-->
+        <label for="description">Description</label>
+            <input type="text" class="form-control" id="description" name="description" ng-model="controller.event.description"/>
         <br>
         <br>
         <img id="photoView" src="#" alt="" style="width:200px;height:300px" />
@@ -20,7 +20,7 @@
         <label for="photo" class="btn btn-inverse" >Upload Photo <i class="fa fa-picture-o fa-fw"></i></label>
         <input type="file" onchange="angular.element(this).scope().uploadFile(this);"
                id="photo" name="photo" ng-model="controller.event.photo" accept="image/jpeg" style="display:none;"/>
-        <button type="submit" class="btn btn-inverse pull-right">Update</button>
+        <button type="submit" class="btn btn-inverse pull-right">Add</button>
     </div>
-    <button type="submit" class="btn btn-inverse">Add</button>
+    <!--<button type="submit" class="btn btn-inverse">Add</button>-->
 </form>

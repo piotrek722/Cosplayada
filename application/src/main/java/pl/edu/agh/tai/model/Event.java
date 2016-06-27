@@ -31,6 +31,9 @@ public class Event {
     private String time;
 
     @Column
+    private String description;
+
+    @Column
     @Lob
     private byte[] photo;
 
@@ -61,13 +64,14 @@ public class Event {
         characterSet = new HashSet<>();
     }
 
-    public Event(String name, String date, String city, String address, String time, byte[] photo) {
+    public Event(String name, String date, String city, String address, String time, String description, byte[] photo) {
         this.name = name;
         this.date = date;
         this.city = city;
         this.address = address;
         this.time = time;
         this.photo = photo;
+        this.description = description;
         this.characterSet = new HashSet<>();
     }
 
@@ -121,7 +125,16 @@ public class Event {
 
     @Override
     public String toString() {
-        return id + ": " + name;
+        return "Event{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", date='" + date + '\'' +
+                ", city='" + city + '\'' +
+                ", address='" + address + '\'' +
+                ", time='" + time + '\'' +
+                ", description='" + description + '\'' +
+                ", characterSet=" + characterSet +
+                '}';
     }
 
     public byte[] getPhoto() { return photo; }

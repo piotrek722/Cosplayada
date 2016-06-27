@@ -10,6 +10,7 @@ public class EventInfo {
     private String city;
     private String address;
     private Date time;
+    private String description;
     private byte[] photo;
 
     public EventInfo() {
@@ -31,12 +32,13 @@ public class EventInfo {
         this.city = city;
     }
 
-    public EventInfo(String name, Date date, String city, String address, Date time,byte[] photo) {
+    public EventInfo(String name, Date date, String city, String address, Date time, String description, byte[] photo) {
         this.name = name;
         this.date = date;
         this.city = city;
         this.address = address;
         this.time = time;
+        this.description = description;
         this.photo = photo;
     }
 
@@ -70,6 +72,10 @@ public class EventInfo {
 
     public Date getTime(){
         return time;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public byte[] getPhoto() { return photo; }
