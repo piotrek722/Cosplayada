@@ -115,6 +115,26 @@ public class Event {
         this.address = address;
     }
 
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCharacterSet(Set<Character> characterSet) {
+        this.characterSet = characterSet;
+    }
+
     public Set<Character> getCharacterSet() {
         return characterSet;
     }
