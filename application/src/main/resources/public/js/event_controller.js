@@ -28,7 +28,11 @@ app.controller('add_events_controller', function($rootScope, $http, $location, $
 
         var event_info = {
             name : event.name,
+            date : event.date,
             city : event.city,
+            address : event.address,
+            time: event.time,
+            description : event.description,
             photo : event.photo
         };
         
@@ -50,6 +54,7 @@ app.controller('add_events_controller', function($rootScope, $http, $location, $
 
     self.addEvent = function() {
         self.event.photo = $rootScope.tmpImage;
+
         check_event(self.event, function(checked) {
             if (checked) {
                 console.log("added new event");
@@ -102,14 +107,21 @@ app.controller('event_controller', function($http, $routeParams, $rootScope, $lo
     self.currentCharacter = {};
 
     self.event = {};
-    
+
+    $rootScope.characterSet = {};
+
     $http.get('/events/' + $routeParams.id, config)
         .then( function(response) {
             console.log(response.data);
             self.event.name = response.data.name;
+            self.event.date = response.data.date;
+            self.event.time = response.data.time;
+            self.event.address = response.data.address;
             self.event.city = response.data.city;
+            self.event.description = response.data.description;
+            $rootScope.characterSet = response.data.characterSet;
             self.event.photo = response.data.photo;
-            console.log(self.event);
+            console.log(Object.keys(response.data));
         }, function onError (response) {
             console.log("Error in joining event");
             console.log(response.data);

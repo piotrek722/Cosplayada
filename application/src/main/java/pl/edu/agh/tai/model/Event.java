@@ -3,7 +3,6 @@ package pl.edu.agh.tai.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,13 +19,19 @@ public class Event {
     private String name;
 
     @Column
-    private Date date;
+    private String date;
 
     @Column
     private String city;
 
     @Column
     private String address;
+
+    @Column
+    private String time;
+
+    @Column
+    private String description;
 
     @Column
     @Lob
@@ -52,6 +57,24 @@ public class Event {
         characterSet = new HashSet<>();
     }
 
+    public Event(String name, String date, String city) {
+        this.name = name;
+        this.date = date;
+        this.city = city;
+        characterSet = new HashSet<>();
+    }
+
+    public Event(String name, String date, String city, String address, String time, String description, byte[] photo) {
+        this.name = name;
+        this.date = date;
+        this.city = city;
+        this.address = address;
+        this.time = time;
+        this.photo = photo;
+        this.description = description;
+        this.characterSet = new HashSet<>();
+    }
+
     public long getId() {
         return id;
     }
@@ -60,7 +83,7 @@ public class Event {
         return name;
     }
 
-    public Date getDate() {
+    public String  getDate() {
         return date;
     }
 
@@ -80,7 +103,7 @@ public class Event {
         this.name = name;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -90,6 +113,26 @@ public class Event {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCharacterSet(Set<Character> characterSet) {
+        this.characterSet = characterSet;
     }
 
     public Set<Character> getCharacterSet() {
@@ -102,7 +145,16 @@ public class Event {
 
     @Override
     public String toString() {
-        return id + ": " + name;
+        return "Event{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", date='" + date + '\'' +
+                ", city='" + city + '\'' +
+                ", address='" + address + '\'' +
+                ", time='" + time + '\'' +
+                ", description='" + description + '\'' +
+                ", characterSet=" + characterSet +
+                '}';
     }
 
     public byte[] getPhoto() { return photo; }

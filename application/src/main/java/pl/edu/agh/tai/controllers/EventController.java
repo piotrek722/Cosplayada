@@ -2,13 +2,15 @@ package pl.edu.agh.tai.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.agh.tai.model.*;
 import pl.edu.agh.tai.model.Character;
+import pl.edu.agh.tai.model.Event;
+import pl.edu.agh.tai.model.EventInfo;
+import pl.edu.agh.tai.model.Response;
 import pl.edu.agh.tai.repository.CharacterRepository;
 import pl.edu.agh.tai.repository.EventRepository;
 import pl.edu.agh.tai.repository.UserRepository;
 
-import java.util.HashSet;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 
@@ -28,7 +30,16 @@ public class EventController {
 
         System.out.println(eventInfo.getName());
         try {
-            Event event = new Event(eventInfo.getName(), eventInfo.getCity(),eventInfo.getPhoto());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm a");
+            Event event = new Event(
+                    eventInfo.getName(),
+                    dateFormat.format(eventInfo.getDate()),
+                    eventInfo.getCity(),
+                    eventInfo.getAddress(),
+                    timeFormat.format(eventInfo.getTime()),
+                    eventInfo.getDescription(),
+                    eventInfo.getPhoto());
             System.out.println("Event created with name: " + eventInfo.getName());
             eventRepository.save(event);
         }
@@ -41,7 +52,7 @@ public class EventController {
 
     @RequestMapping(value = "/events/{id}")
     public Event showEventWithId(@PathVariable long id) {
-        System.out.println("Event found: " + eventRepository.findById(id).getName());
+        System.out.println("Event found: " + eventRepository.findById(id));
         return eventRepository.findById(id);
     }
 
@@ -67,6 +78,15 @@ public class EventController {
             return new Response(true, null);
         }
         return new Response(false, "Error");
+    }
+
+    @RequestMapping(value = "/events/{id}/characters")
+    public Iterable<Character> showParticipants(@PathVariable long id) {
+        Event event = eventRepository.findById(id);
+        if (event != null) {
+            return event.getCharacterSet();
+        }
+        return null;
     }
 
     @Autowired

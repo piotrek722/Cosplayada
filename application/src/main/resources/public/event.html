@@ -15,8 +15,9 @@
     <div class="col-lg-6 col-md-6">
         <br/>
         <h3>City: {{controller.event.city}}</h3>
-        <h3>Date: {{controller.event.date}}</h3>
-        <p></p>
+        <h3>Date: {{controller.event.time}} {{controller.event.date}}</h3>
+        <h3>Address: {{controller.event.address}}</h3>
+        <p>{{controller.event.description}}</p>
     </div>
 
     <br/>
@@ -32,9 +33,29 @@
 
             </div>
             <br/>
-            <button type="submit" class="btn btn-primary">Join</button>
+            <button type="submit" class="btn btn-inverse">Join</button>
         </form>
     </div>
+
+
+    <div class="row" ng-show="characterSet.length > 0">
+        <h3 class="col-lg-12 col-md-12">Characters at this event</h3>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3 col-md-3" ng-repeat="x in characterSet">
+            <br>
+            <div class="hovereffect">
+                <img ng-src="data:image/JPEG;base64,{{x.photo}}" class="img-responsive empImg " id="empImage" style="width:350px;height:200px">
+                <div class="overlay">
+                    <h2>{{ x.name }}</h2>
+                    <a class="info" href="#/characters/{{x.id}}">See Character</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <br/>
 
 
 </div>

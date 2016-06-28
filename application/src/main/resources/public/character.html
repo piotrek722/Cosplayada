@@ -1,16 +1,14 @@
-<div class="container" ng-controller="character_controller">
-    <div>
-        <h2>{{controller.character.name}}</h2>
-    </div>
-    <div class="col-lg-3">
-        <br/>
-        <img ng-src="data:image/JPEG;base64,{{controller.character.photo}}" width="200px" height="270px">
-    </div>
-    <div class="col-lg-5">
-        <br/>
-        <h3>Description</h3>
-        <p>{{controller.character.description}}</p>
+<div ng-controller="character_controller">
+    <div class="row">
+        <h2 class="col-lg-12 col-md-12 col-sm-12">{{controller.character.name}}</h2>
     </div>
 
-    <br/>
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3">
+            <img class="img-responsive img-rounded" ng-src="data:image/JPEG;base64,{{controller.character.photo}}">
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-9">
+            <p>{{controller.character.description}}</p>
+        </div>
+    </div>
 </div>
